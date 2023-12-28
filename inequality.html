@@ -1,0 +1,259 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Jonathan Vincent Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper" class="fade-in">
+				
+
+				<!-- Intro -->
+					<div id="intro">
+						<h1>Jonathan Vincent<br />
+						Data Analyst Portfolio</h1>
+						<p>Data Analyst | R, Python, SQL, Excel, Tableau<br />
+						</p>
+					</div>
+
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="index.html">Projects</a></li>
+							<li><a href="aboutme.html">About Me</a></li>
+							<li><a href="index auf deutsch.html">Portfolio auf Deutsch</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="https://www.linkedin.com/in/jonathan-vincent-520259165/" class="icon brands fa-linkedin"><span class="label">Linkedin</span></a></li>
+							<li><a href="https://github.com/vincentium123" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<article class="post featured">
+                            <header class="major">
+                                <h2><a href="https://public.tableau.com/views/mappinginequality/FinalDashboard?:language=en-US&:display_count=n&:origin=viz_share_link">Inequality in the United States</a></h2>
+                                <p>This is a visualization of American inequality. The United States is a land of contrasts, with some areas having among the best quality of life in the entire world and other areas seeming to have more in common with much poorer countries. In the visualization below, you can see inequality mapped across six categories: life expectancy, unemployment, income, the percentage of the population who never graduated from high school, the percentage of the population who have university degrees, and the poverty rate. All data comes from official US government sources and is available at the state and county level. For the best view, select the 'full screen' option in the bottom right. All data cleaning was done by myself, using R. Below you can find my own analysis of six interesting facts revealed by the data. Enjoy!</p>
+                                <div class='tableauPlaceholder' id='viz1703702478538' style='position: relative; margin-left: -50px;margin-bottom: 30px'><noscript><a href='#'><img alt='Final Dashboard ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;ma&#47;mappinginequality&#47;FinalDashboard&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='mappinginequality&#47;FinalDashboard' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;ma&#47;mappinginequality&#47;FinalDashboard&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1703702478538');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='1024px';vizElement.style.height='795px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='1024px';vizElement.style.height='795px';} else { vizElement.style.width='100%';vizElement.style.height='4927px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+                            <p> Below are six interesting cases you can see in the data above. They're a mixture of trends, outliers, and interesting data points. On each map shown, the color scheme should be understood the same: the deeper blue, the better, the deeper red, the worse, white is average.</p>
+                                <div class="collapsible-section">
+                                    <button class="collapsible-button">
+                                        <span class="collapsible-text">The Decline of Poverty in the Deep South</span>
+                                        <span class="collapsible-icon">+</span>
+                                    </button>
+                                    <div class="collapsible-content">
+                                        <!-- Your collapsible section content goes here -->
+                                        <p style="margin-bottom: 10px;">One of the factors that jumped out at me immediately when I first viewed the map of poverty was the steep decline of poverty in the Deep South- the states of Alabama, Mississippi, Louisiana, and Arkansas, primarily. The South has long been the poorest region of the US, in large part to the legacy of slavery and segregation. Poverty rates among majority Black counties in the South were, and remain, much higher than the average in the United States.</p>
+                                        <img src="images/poverty.png" alt="Red = higher poverty, blue = lower" style="max-width: 100%; height: auto; margin-bottom: 10px;">
+                                        <p style="margin-bottom: 10px;">However, there has been progress. Take a look at the images above, showing poverty rates in southern counties in 1960 and 2020. The difference is massive. Some of these counties had the majority of their populations in poverty in 1960, but now have poverty rates under 30%. Obviously, there is still work to be done, but the difference is inspiring.</p>
+                                        <p>I searched online for the cause of this, and one of the reasons seems to be the social programs put in place by President Lyndon B. Johnson in the 1960s.Public health programs like Medicare and Medicaid, increased social security spending, and the end of legal segregation all drove down poverty, particularly among the elderly. The results of these programs, as well as the general economic rise of the South over the last fifty years, are plain to see on the map.</p>
+                                    </div>
+                                </div>
+                                <div class="collapsible-section">
+                                    <button class="collapsible-button">
+                                        <span class="collapsible-text">The Life Expectancy of the Lakota</span>
+                                        <span class="collapsible-icon">+</span>
+                                    </button>
+                                    <div class="collapsible-content">
+                                        <!-- Your collapsible section content goes here -->
+                                        <p style="margin-bottom: 10px;">The life expectancy of the United States in 2019 was 78.79 years, 50th in the world. This is below many other wealthy countries by around 2-5 years. The life expectancy of Oglala Lakota County in South Dakota, however, was only 64.5 years, 14 years worse than the United States as a whole. If Oglala Lakota County was a country, its life expectancy would sit between Ghana and Haiti in the bottom third of the world rankings. Nor is this anything new. Oglala Lakota County has long had the distinction of having the lowest life expectancy in the United States, by far. In the map of life expectancy below, this is plainly visible. (Red indicates a lower life expectancy.)</p>
+                                        <img src="images/life expectancy.png" alt="Red is lower life expectancy" style="width: 600px; height: 400px; margin: 0 auto 10px; display: block;">
+                                        <p style="margin-bottom: 10px;">The historical reasons for this are deep. The county sits entirely within the Pine Ridge Indian Reservation, in the center of the Badlands, a dry and mountainous region completely unsuited to agriculture. 95% of the population is American Indian, mostly from the Lakota tribe. Reservations in the United States are impoverished, rural, and often have few services. This is doubly true in Oglala Lakota County, which has consistently ranked as the poorest county in the United States for decades. The county was the location for two major events in American history: the Wounded Knee Massacre, where the US Army slaughtered at least 150 Lakota and, a century later, the Wounded Knee Occupation, when hundreds of American Indian activists occupied the town of Wounded Knee, demanding better conditions on the reservations.</p>
+                                        <p>Put together, this has created a toxic storm: unemployment in the county is over 80%, diseases like diabetes and hypertension are rampant, and alcoholism is common. Little progress has been made on any of these issues.</p>
+                                    </div>
+                                </div>
+                                <div class="collapsible-section">
+                                    <button class="collapsible-button">
+                                        <span class="collapsible-text">Unemployment during Crises in Nevada</span>
+                                        <span class="collapsible-icon">+</span>
+                                    </button>
+                                    <div class="collapsible-content">
+                                        <!-- Your collapsible section content goes here -->
+                                        <p style="margin-bottom: 10px;">Nevada is an unusual state. Roughly the size of Spain, it had a population of only 3.1 million people in 2021. 2.3 million of those people- roughly two thirds of the population- live in Clark County at the southern end of the state. The name Clark County is not famous worldwide, but its main city is: Las Vegas.</p>
+                                        <p style="margin-bottom: 10px;">Las Vegas is famous for gambling, hotels, parties, and shows. All of these are luxuries and often the first things to go when households try to cut back during downturns. That means Nevada is the state with the wildest swings in unemployment. During good times, its economy is strong, often with lower unemployment than the national average. But during a crisis, it often has the highest unemployment in the nation.</p>
+                                        <img src="images/unemployment.png" style="max-width: 100%; height: auto; margin-bottom: 10px;">
+                                        <p>Consider the three maps above, showing the difference between Nevada’s unemployment rate and the total unemployment rate in the US. On the left, we can see 2005, where Nevada had an unemployment rate below the US average. Five years later, following the Global Financial Crisis and in the midst of the Great Recession, Nevada’s unemployment rate was four points higher than the US average. The difference was even starker during COVID. In 2020, as much of the US locked down to dampen the spread of COVID and tourism collapsed, Nevada’s unemployment rate reached 13.5 percent, 5.4 points higher than the US as a whole. 
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="collapsible-section">
+                                    <button class="collapsible-button">
+                                        <span class="collapsible-text">The Rise of the Tech Industry</span>
+                                        <span class="collapsible-icon">+</span>
+                                    </button>
+                                    <div class="collapsible-content">
+                                        <!-- Your collapsible section content goes here -->
+                                        <p style="margin-bottom: 10px;">The map below shows the Bay Area, home to the cities of San Francisco, San Jose, and Oakland and some of the most famous companies in the world- Facebook, Google, Twitter, OpenAI. This region has been responsible for some of the largest breakthroughs in digital technology this century and has become one of the wealthiest regions, not just in the United States, but in the world.</p>
+                                        <img src="images/income.png" style="max-width: 50%; height: auto; margin: 0 auto 10px; display: block;">
+                                        <p style="margin-bottom: 10px;">The story can be clearly seen on the map above. In 1980, San Francisco was already a center of advanced manufacturing thanks to industrial parks near Stanford University and generous funding by the US government. Banking and shipping were also major industries. Due to these industries, the Bay Area was already wealthier than the US average, with citizens in the six core counties of the area having between 110 and 160% of the mean US income on average.</p>
+                                        <p>As the decades passed and the tech industry grew however, the income differential between the Bay Area and the rest of the United States grew wider and wider. By 2000, Marin County, north of San Francisco, already had an income double the US average. By 2020, San Francisco and San Matteo Counties had also reached this level. Santa Clara county, home of San Jose, Facebook, and Google, was not far behind. Even as the tech industry has spread out, with tech hubs forming in Austin, Texas, and Boston, Massachusetts, there’s no sign that income levels between the Bay Area and the rest of the United States will equalize. </p>
+                                    </div>
+                                </div>
+                                <div class="collapsible-section">
+                                    <button class="collapsible-button">
+                                        <span class="collapsible-text">Most Americans now Graduate from High School</span>
+                                        <span class="collapsible-icon">+</span>
+                                    </button>
+                                    <div class="collapsible-content">
+                                        <!-- Your collapsible section content goes here -->
+                                        <p style="margin-bottom: 10px;">In 1970, 47.7% of American adults hadn’t graduated from high school. In 2020, that number was down to 11.1%. This is a titanic shift in American society, with a few regional aspects that are worth pointing out. 
+                                        </p>
+                                        <p style="margin-bottom: 10px;"><b>1. The Upper Midwest has caught up to the nation</b></p>
+                                        <img src="images/minnesota hs.png" style="max-width: 100%; height: auto; margin-bottom: 10px;">
+                                        <p style="margin-bottom: 10px;">The Upper Midwest- the states of Minnesota, North Dakota, and South Dakota, had many counties which lagged behind the US average in high school graduates in 1970. By 2000, they’d improved, with many counties now above average; by 2020 almost all counties in the area were around or above the national average.</p>
+                                        <p style="margin-bottom: 10px;"><b>2. North and South Jersey converge</b></p>
+                                        <img src="images/nj hs.png" style="max-width: 30%; height: auto; margin: 0 auto 10px; display: block;">
+                                        <p style="margin-bottom: 10px;">New Jersey has long been the butt of jokes in the United States, and the southern half of the state was particularly maligned. It was seen as uncultured, poor, and disconnected from major urban centers. In 1970, there’s evidence of where this attitude came from- the northern and southern halves of the state had completely different educational profiles, with the north more highly educated than the country as a whole, and the south less. By 2020, however, the two halves of the state had largely converged, save for a few holdout counties.</p>
+                                        <p style="margin-bottom: 10px;"><b>3.  The South has improved the most</b></p>
+                                        <img src="images/south hs.png" style="max-width: 100%; height: auto; margin-bottom: 10px;">
+                                        <p style="margin-bottom: 10px;">Go back to 1970, and it wasn’t odd to find counties in the southern US where only around 20% of the adults had graduated high school. On the map, the South is a sea of red and orange- county after county below the US average. Fast forward to 2020, however, and the picture changes. There’s still a lot of light orange, but throughout it is blue- counties which are above average. These counties are a mix of urban, suburban, and rural counties, and are a testament to the economic development of many southern states in the last 50 years.</p>
+                                    </div>
+                                </div>
+                                <div class="collapsible-section">
+                                    <button class="collapsible-button">
+                                        <span class="collapsible-text">University Degree Holders are More Common and More Tightly Clustered</span>
+                                        <span class="collapsible-icon">+</span>
+                                    </button>
+                                    <div class="collapsible-content">
+                                        <!-- Your collapsible section content goes here -->
+                                        <p style="margin-bottom: 10px;">In 1970, it was not common for an American to have a college degree- only 10% of adult did. By 2020, that number had tripled to 33.7%. At the same time, however, degree holders have grown more clustered. Take a look at the map of the East Coast below. In 1970, there were obvious patterns: lots of degree holders in the New York and Boston areas, many fewer in the South. However, the differences were relatively mild. Virtually all counties had some level of degree-holding inhabitants, and even highly educated counties had only 20% degree holders.</p>
+                                        <img src="images/uni.png" style="max-width: 100%; height: auto; margin-bottom: 10px;">
+                                        <p style="margin-bottom: 10px;">By 2020, the situation had entirely changed. Although the percentage of people with degrees had increased almost everywhere, it had increased far more rapidly in some areas than others. Running from Washington, D.C. in the south to Portland in the north is bright band of highly educated counties, containing many of the largest and wealthiest cities in the United States- Washington, New York, Boston- along with their suburbs. Scattered too throughout the countryside are bright blue dots, each a major city: The Research Triangle in North Carolina, Atlanta in Georgia, Indianapolis in Indiana. In each of these areas, the college educated have clustered, making them centers of education, research, technology, and services.</p>
+                                    </div>
+                                </div>
+                            </ul>
+                        </article>
+
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<section>
+							<form method="post" action="#">
+								<div class="fields">
+									<div class="field">
+										<label for="name">Name</label>
+										<input type="text" name="name" id="name" />
+									</div>
+									<div class="field">
+										<label for="email">Email</label>
+										<input type="text" name="email" id="email" />
+									</div>
+									<div class="field">
+										<label for="message">Message</label>
+										<textarea name="message" id="message" rows="3"></textarea>
+									</div>
+								</div>
+								<ul class="actions">
+									<li><input type="submit" value="Send Message" /></li>
+								</ul>
+							</form>
+						</section>
+						<section class="split contact">
+							<section>
+								<h3>Email</h3>
+								<p><a href="#">jonvin35@gmail.com</a></p>
+							</section>
+						</section>
+					</footer>
+
+				<!-- Copyright -->
+					<div id="copyright">
+						<ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+            <style>
+                .collapsible-section {
+                    text-align: left;
+                }
+            
+                .collapsible-button {
+                    background-color: #555; /* Lighter gray */
+                    color: #fff; /* White text */
+                    padding: 10px;
+                    border: none;
+                    cursor: pointer;
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    text-align: left;
+                    transition: background-color 0.3s, color 0.3s; /* Add animation for background color and text color */
+                }
+            
+                .collapsible-text {
+                    flex: 1;
+                    color: #fff;
+                    margin-right: 10px; /* Add some space between text and icon */
+                }
+            
+                .collapsible-icon {
+                    font-size: 18px; /* Adjust the size as needed */
+                    color: #fff;
+                }
+            
+                .collapsible-content {
+                    max-height: 0;
+                    overflow: hidden;
+                    transition: max-height 0.3s ease-in-out; /* Add animation for max-height */
+                    padding: 10px;
+                    background-color: #ddd; /* Light gray */
+                }
+            
+                .collapsible-content p {
+                    margin: 0;
+                }
+            
+                .collapsible-section.active .collapsible-content {
+                    max-height: 200px; /* Adjust the max-height as needed */
+                }
+            </style>
+            
+            <!-- JavaScript for collapsible functionality -->
+            <script>
+                var coll = document.getElementsByClassName("collapsible-button");
+                var i;
+            
+                for (i = 0; i < coll.length; i++) {
+                    coll[i].addEventListener("click", function () {
+                        this.classList.toggle("active");
+                        var content = this.nextElementSibling;
+                        var icon = this.querySelector('.collapsible-icon');
+            
+                        if (content.style.maxHeight) {
+                            content.style.maxHeight = null;
+                            icon.innerHTML = "+";
+                        } else {
+                            content.style.maxHeight = content.scrollHeight + "px";
+                            icon.innerHTML = "-";
+                        }
+                    });
+                }
+            </script>
+
+	</body>
+</html>
+

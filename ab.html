@@ -1,0 +1,251 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Jonathan Vincent Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper" class="fade-in">
+				
+
+				<!-- Intro -->
+					<div id="intro">
+						<h1>Jonathan Vincent<br />
+						Data Analyst Portfolio</h1>
+						<p>Data Analyst | R, Python, SQL, Excel, Tableau<br />
+						</p>
+					</div>
+
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="index.html">Projects</a></li>
+							<li><a href="aboutme.html">About Me</a></li>
+							<li><a href="index auf deutsch.html">Portfolio auf Deutsch</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="https://www.linkedin.com/in/jonathan-vincent-520259165/" class="icon brands fa-linkedin"><span class="label">Linkedin</span></a></li>
+							<li><a href="https://github.com/vincentium123" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<article class="post featured">
+                            <header class="major">
+                                <h2>A/B Tests</h2>
+                                <p>As A/B testing if a key component of many modern websites and applications, I've prepared several examples that can be seen below. </p>
+                                <div class="collapsible-section">
+                                    <button class="collapsible-button">
+                                        <span class="collapsible-text">Marketing Example</span>
+                                        <span class="collapsible-icon">+</span>
+                                    </button>
+                                    <div class="collapsible-content">
+                                        <!-- Your collapsible section content goes here -->
+                                        <p style="margin-bottom: 10px;">Hello there, and welcome to my example of an A/B test. This A/B test will be conducted with R, and is based on a publicly available dataset which can be found <a href="https://www.kaggle.com/datasets/faviovaz/marketing-ab-testing/data">here</a>. In this scenario, a company is attempting to see whether its recent ad campaign has been effective. It has conducted an experiment by placing ads on websites for some users while other users see PSAs unrelated to the company. These two groups are then compared to see whether they’ve bought the product the company is trying to sell or not. </p>
+                                        <p style="margin-bottom: 10px;">Before we get started, a few basic facts about the data:
+                                            <ul>
+                                                <li>There are 588101 unique potential customers in the data set</li>
+                                                <li>96% of potential customers saw the ads, 4% did not</li>
+                                                <li>Approximately 97.5% of potential customers did not buy the product; only 2.5% did</li>
+                                                <li>Customers were exposed to the ads multiple times (1-2065 times) with a median of 13.</li>
+                                            </ul>
+                                        </p>
+                                        <p style="margin-bottom: 10px;">That said, let’s start the analysis!</p>
+                                        <img src="images/marketing_ab1.png" style="max-width: 40%; height: auto; margin-bottom: 10px;">
+                                        <p style="margin-bottom: 10px;">We’ll start with the basics, evaluating whether or not mere exposure to the ads is associated with buying the product. At a visual glance, it looks like it is. 2.55% of users who saw an ad bought the product, versus only 1.78% of users who saw the PSA. </p>
+                                        <p style="margin-bottom: 10px;">However, there’s still a few tests to do. First thing: is this difference actually statistically significant? To find out, I’ll do a chi-squared test. We’re looking, ideally, for a value here of under 0.01, indicating that the difference between the two values is extremely unlikely if the event (buying the product) is equally likely for both PSA and ad-viewers. Luckily for us, we get a value of 2X10^-13, indicating that there’s a miniscule chance the ad campaign has had no effect of the likelihood of purchasing the product. </p>
+                                        <p style="margin-bottom: 10px;">As a next step, we’ll look at the effect size: how much effect the ad campaign had on customer behavoir. For this, we’ll use Cramer’s V, a statistical test to determine effect size. Cramer’s V can return a value between 0 and 1, with 0 meaning no effect and 1 indicating an extremely strong effect. In this case, we get a value of only 0.01- pretty small in statistical terms. However, that alone is not enough to indicate whether the ad campaign was a success. The dataset didn’t include information on how many revenue the company receives per unit, the cost of the campaign, etc.- all vital information to know.</p>
+                                        <p style="margin-bottom: 10px;">Additionally, we know that some users saw the advertisements more than others. It may be that seeing the ad once had relatively little effect, but seeing it multiple times can strongly predict whether someone purchases the item. Most users in the dataset saw relatively few ads, but some users saw up to 2000.</p>
+                                        <table style="width:30%; border-collapse: collapse; margin-bottom: 10px;">
+                                            <tr>
+                                                <th># of Ads Seen</th>
+                                                <th>% of Users</th>
+                                            </tr>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>9.6%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>< 10</td>
+                                                <td>42.3%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>< 50</td>
+                                                <td>87.9%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>< 100</td>
+                                                <td>96.0%</td>
+                                            </tr>
+                                        </table>
+                                        <p style="margin-bottom: 10px;">A first look at the data shows that there is most likely a connection between the number of ads seen and the probability of purchasing the products. These numbers are only for users who saw the ad, not those who saw the PSA. </p>
+                                        <table style="width:30%; border-collapse: collapse; margin-bottom: 10px;">
+                                            <tr>
+                                                <th># of Ads Seen</th>
+                                                <th>Probability of Purchase</th>
+                                            </tr>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>0.19%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2-10</td>
+                                                <td>0.40%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>11-50</td>
+                                                <td>1.89%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>51-100</td>
+                                                <td>11.6%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>101-500</td>
+                                                <td>17.1%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>More than 500</td>
+                                                <td>17.5%</td>
+                                            </tr>
+                                        </table>
+                                        <p style="margin-bottom: 10px;">As can be seen, very few users who saw the ad fewer than 50 times purchased the product. Those who saw the ad more than 50 times, however, stood a good chance of purchasing the product, although past a few hundred views, additional advertising stops greatly increasing the chances of a purchase.</p>
+                                        
+                                    </div>
+                                </div>
+                            </ul>
+                        </article>
+
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<section>
+							<form method="post" action="#">
+								<div class="fields">
+									<div class="field">
+										<label for="name">Name</label>
+										<input type="text" name="name" id="name" />
+									</div>
+									<div class="field">
+										<label for="email">Email</label>
+										<input type="text" name="email" id="email" />
+									</div>
+									<div class="field">
+										<label for="message">Message</label>
+										<textarea name="message" id="message" rows="3"></textarea>
+									</div>
+								</div>
+								<ul class="actions">
+									<li><input type="submit" value="Send Message" /></li>
+								</ul>
+							</form>
+						</section>
+						<section class="split contact">
+							<section>
+								<h3>Email</h3>
+								<p><a href="#">jonvin35@gmail.com</a></p>
+							</section>
+						</section>
+					</footer>
+
+				<!-- Copyright -->
+					<div id="copyright">
+						<ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+            <style>
+                .collapsible-section {
+                    text-align: left;
+                }
+            
+                .collapsible-button {
+                    background-color: #555; /* Lighter gray */
+                    color: #fff; /* White text */
+                    padding: 10px;
+                    border: none;
+                    cursor: pointer;
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    text-align: left;
+                    transition: background-color 0.3s, color 0.3s; /* Add animation for background color and text color */
+                }
+            
+                .collapsible-text {
+                    flex: 1;
+                    color: #fff;
+                    margin-right: 10px; /* Add some space between text and icon */
+                }
+            
+                .collapsible-icon {
+                    font-size: 18px; /* Adjust the size as needed */
+                    color: #fff;
+                }
+            
+                .collapsible-content {
+                    max-height: 0;
+                    overflow: hidden;
+                    transition: max-height 0.3s ease-in-out; /* Add animation for max-height */
+                    padding: 10px;
+                    background-color: #ddd; /* Light gray */
+                }
+            
+                .collapsible-content p {
+                    margin: 0;
+                }
+            
+                .collapsible-section.active .collapsible-content {
+                    max-height: 200px; /* Adjust the max-height as needed */
+                }
+            </style>
+            
+            <!-- JavaScript for collapsible functionality -->
+            <script>
+                var coll = document.getElementsByClassName("collapsible-button");
+                var i;
+            
+                for (i = 0; i < coll.length; i++) {
+                    coll[i].addEventListener("click", function () {
+                        this.classList.toggle("active");
+                        var content = this.nextElementSibling;
+                        var icon = this.querySelector('.collapsible-icon');
+            
+                        if (content.style.maxHeight) {
+                            content.style.maxHeight = null;
+                            icon.innerHTML = "+";
+                        } else {
+                            content.style.maxHeight = content.scrollHeight + "px";
+                            icon.innerHTML = "-";
+                        }
+                    });
+                }
+            </script>
+
+	</body>
+</html>
+

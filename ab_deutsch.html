@@ -1,0 +1,250 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Jonathan Vincent Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper" class="fade-in">
+				
+
+				<!-- Intro -->
+					<div id="intro">
+						<h1>Jonathan Vincent<br />
+						Data Analyst Portfolio</h1>
+						<p>Data Analyst | R, Python, SQL, Excel, Tableau<br />
+						</p>
+					</div>
+
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="index auf deutsch.html">Projekte</a></li>
+							<li><a href="ubermich.html">Über mich</a></li>
+                            <li><a href="index.html">Portfolio in English</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="https://www.linkedin.com/in/jonathan-vincent-520259165/" class="icon brands fa-linkedin"><span class="label">Linkedin</span></a></li>
+							<li><a href="https://github.com/vincentium123" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<article class="post featured">
+                            <header class="major">
+                                <h2>A/B Tests</h2>
+                                <p>Weil A/B-Tests ein wichtiger Bestandteil vieler moderner Websites und Applikationen sind, habe ich einige Beispiele vorbereitet, die Sie unten sehen können.</p>
+                                <div class="collapsible-section">
+                                    <button class="collapsible-button">
+                                        <span class="collapsible-text">Marketing Beispiel</span>
+                                        <span class="collapsible-icon">+</span>
+                                    </button>
+                                    <div class="collapsible-content">
+                                        <!-- Your collapsible section content goes here -->
+                                        <p style="margin-bottom: 10px;">Hallo und herzlich willkommen zu meinem Beispiel für einen A/B-Test. Dieser A/B-Test wird mit R durchgeführt und basiert auf einem öffentlich verfügbaren Datensatz, den Sie <a href="https://www.kaggle.com/datasets/faviovaz/marketing-ab-testing/data">hier</a> finden. In diesem Szenario versucht ein Unternehmen herauszufinden, ob seine neueste Werbekampagne wirksam war. Es hat ein Experiment durchgeführt, indem es für einige Nutzer Anzeigen auf Websites platziert hat, während andere Nutzer PSAs sehen, die nichts mit dem Unternehmen zu tun haben. Diese beiden Gruppen werden dann verglichen, um festzustellen, ob sie das Produkt, das das Unternehmen zu verkaufen versucht, gekauft haben oder nicht.</p>
+                                        <p style="margin-bottom: 10px;">Bevor wir beginnen, ein paar grundlegende Fakten zu den Daten:
+                                            <ul>
+                                                <li>Es gibt 588101 einzigartige potenzielle Kunden im Datensatz.</li>
+                                                <li>96 % der potenziellen Kunden sahen die Anzeigen, 4 % sahen sie nicht.</li>
+                                                <li>Ungefähr 97,5 % der potenziellen Kunden haben das Produkt nicht gekauft, nur 2,5 % haben es gekauft.</li>
+                                                <li>Die Kunden wurden mehrfach mit den Anzeigen konfrontiert (1-2065 Mal), wobei der Median bei 13 lag.</li>
+                                            </ul>
+                                        </p>
+                                        <p style="margin-bottom: 10px;">Also, beginnen wir mit der Analyse!</p>
+                                        <img src="images/basic_plot_de.png" style="max-width: 40%; height: auto; margin-bottom: 10px;">
+                                        <p style="margin-bottom: 10px;">Beginnen wir mit den Grundlagen, nämlich der Bewertung, ob das bloße Betrachten der Werbung mit dem Kauf des Produkts verbunden ist oder nicht. Auf den ersten Blick sieht es so aus, als ob dies der Fall wäre. 2,55 % der Nutzer, die eine Anzeige gesehen haben, haben das Produkt gekauft, aber nur 1,78 % der Nutzer, die den PSA gesehen haben. </p>
+                                        <p style="margin-bottom: 10px;">Es sind jedoch noch einige Tests erforderlich. Erstens: Ist dieser Unterschied tatsächlich statistisch signifikant? Um das herauszufinden, werde ich einen Chi-Squared-Test durchführen. Idealerweise suchen wir hier einen Wert unter 0,01, was bedeutet, dass der Unterschied zwischen den beiden Werten extrem unwahrscheinlich ist, wenn das Ereignis (der Kauf des Produkts) für PSA- und Werbebetrachter gleich wahrscheinlich ist. Glücklicherweise erhalten wir einen Wert von 2X10^-13, was bedeutet, dass die Werbekampagne mit an Sicherheit grenzender Wahrscheinlichkeit keinen Einfluss auf die Kaufwahrscheinlichkeit des Produkts hatte.</p>
+                                        <p style="margin-bottom: 10px;">In einem nächsten Schritt werden wir die Effektgröße untersuchen: wie viel Einfluss die Werbekampagne auf das Kundenverhalten hatte. Hierfür verwenden wir Cramer's V, einen statistischen Test zur Bestimmung der Effektgröße. Cramer's V kann einen Wert zwischen 0 und 1 liefern, wobei 0 für keinen Effekt und 1 für einen extrem starken Effekt steht. In diesem Fall erhalten wir einen Wert von nur 0,01 - statistisch gesehen ein ziemlich kleiner Wert. Das allein reicht jedoch nicht aus, um festzustellen, ob die Werbekampagne ein Erfolg war. Der Datensatz enthielt keine Informationen darüber, wie viele Einnahmen das Unternehmen pro Einheit erzielt, wie hoch die Kosten der Kampagne waren usw. - alles wichtige Informationen, die man wissen muss.</p>
+                                        <p style="margin-bottom: 10px;">Außerdem wissen wir, dass einige Nutzer die Anzeigen häufiger gesehen haben als andere. Es kann sein, dass das einmalige Betrachten der Anzeige relativ wenig Wirkung hat, aber das mehrmalige Betrachten der Anzeige kann stark vorhersagen, ob jemand den Artikel kauft. Die meisten Nutzer des Datensatzes sahen relativ wenige Anzeigen, aber einige Nutzer sahen bis zu 2000 Anzeigen.</p>
+                                        <table style="width:30%; border-collapse: collapse; margin-bottom: 10px;">
+                                            <tr>
+                                                <th>Anzahl der gesehenen Anzeigen</th>
+                                                <th>% der Nutzer</th>
+                                            </tr>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>9.6%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>< 10</td>
+                                                <td>42.3%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>< 50</td>
+                                                <td>87.9%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>< 100</td>
+                                                <td>96.0%</td>
+                                            </tr>
+                                        </table>
+                                        <p style="margin-bottom: 10px;">Ein erster Blick auf die Daten zeigt, dass es höchstwahrscheinlich einen Zusammenhang zwischen der Anzahl der gesehenen Anzeigen und der Kaufwahrscheinlichkeit der Produkte gibt. Diese Zahlen beziehen sich nur auf die Nutzer, die die Anzeige gesehen haben, nicht auf diejenigen, die die PSA gesehen haben. </p>
+                                        <table style="width:30%; border-collapse: collapse; margin-bottom: 10px;">
+                                            <tr>
+                                                <th>Anzahl der gesehenen Anzeigen</th>
+                                                <th>Wahrscheinlichkeit des Kaufs</th>
+                                            </tr>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>0.19%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2-10</td>
+                                                <td>0.40%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>11-50</td>
+                                                <td>1.89%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>51-100</td>
+                                                <td>11.6%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>101-500</td>
+                                                <td>17.1%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>More than 500</td>
+                                                <td>17.5%</td>
+                                            </tr>
+                                        </table>
+                                        <p style="margin-bottom: 10px;">Wie man sieht, haben nur sehr wenige Nutzer, die die Anzeige weniger als 50 Mal gesehen haben, das Produkt gekauft. Diejenigen, die die Anzeige mehr als 50 Mal sahen, hatten jedoch eine gute Chance, das Produkt zu kaufen, obwohl nach einigen hundert Aufrufen die zusätzliche Werbung die Chancen auf einen Kauf stark erhöht.</p>
+                                    </div>
+                                </div>
+                            </ul>
+                        </article>
+
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<section>
+							<form method="post" action="#">
+								<div class="fields">
+									<div class="field">
+										<label for="name">Name</label>
+										<input type="text" name="name" id="name" />
+									</div>
+									<div class="field">
+										<label for="email">Email</label>
+										<input type="text" name="email" id="email" />
+									</div>
+									<div class="field">
+										<label for="message">Message</label>
+										<textarea name="message" id="message" rows="3"></textarea>
+									</div>
+								</div>
+								<ul class="actions">
+									<li><input type="submit" value="Send Message" /></li>
+								</ul>
+							</form>
+						</section>
+						<section class="split contact">
+							<section>
+								<h3>Email</h3>
+								<p><a href="#">jonvin35@gmail.com</a></p>
+							</section>
+						</section>
+					</footer>
+
+				<!-- Copyright -->
+					<div id="copyright">
+						<ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+            <style>
+                .collapsible-section {
+                    text-align: left;
+                }
+            
+                .collapsible-button {
+                    background-color: #555; /* Lighter gray */
+                    color: #fff; /* White text */
+                    padding: 10px;
+                    border: none;
+                    cursor: pointer;
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    text-align: left;
+                    transition: background-color 0.3s, color 0.3s; /* Add animation for background color and text color */
+                }
+            
+                .collapsible-text {
+                    flex: 1;
+                    color: #fff;
+                    margin-right: 10px; /* Add some space between text and icon */
+                }
+            
+                .collapsible-icon {
+                    font-size: 18px; /* Adjust the size as needed */
+                    color: #fff;
+                }
+            
+                .collapsible-content {
+                    max-height: 0;
+                    overflow: hidden;
+                    transition: max-height 0.3s ease-in-out; /* Add animation for max-height */
+                    padding: 10px;
+                    background-color: #ddd; /* Light gray */
+                }
+            
+                .collapsible-content p {
+                    margin: 0;
+                }
+            
+                .collapsible-section.active .collapsible-content {
+                    max-height: 200px; /* Adjust the max-height as needed */
+                }
+            </style>
+            
+            <!-- JavaScript for collapsible functionality -->
+            <script>
+                var coll = document.getElementsByClassName("collapsible-button");
+                var i;
+            
+                for (i = 0; i < coll.length; i++) {
+                    coll[i].addEventListener("click", function () {
+                        this.classList.toggle("active");
+                        var content = this.nextElementSibling;
+                        var icon = this.querySelector('.collapsible-icon');
+            
+                        if (content.style.maxHeight) {
+                            content.style.maxHeight = null;
+                            icon.innerHTML = "+";
+                        } else {
+                            content.style.maxHeight = content.scrollHeight + "px";
+                            icon.innerHTML = "-";
+                        }
+                    });
+                }
+            </script>
+
+	</body>
+</html>
+
