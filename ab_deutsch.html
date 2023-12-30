@@ -11,6 +11,29 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+        <style>
+            /* Style for the table */
+            table {
+              border-collapse: collapse;
+              width: 100%;
+            }
+        
+            /* Style for the table borders */
+            table, th, td {
+              border: 1px solid black;
+            }
+        
+            /* Additional styling for table headers */
+            th, td {
+              padding: 8px;
+              text-align: left;
+            }
+        
+            /* Set the width of the second column based on content */
+            th:nth-child(1), td:nth-child(1) {
+              width: auto; /* or use a specific width value if needed */
+            }
+          </style>
 	</head>
 	<body class="is-preload">
 
@@ -47,6 +70,71 @@
                             <header class="major">
                                 <h2>A/B Tests</h2>
                                 <p>Weil A/B-Tests ein wichtiger Bestandteil vieler moderner Websites und Applikationen sind, habe ich einige Beispiele vorbereitet, die Sie unten sehen können.</p>
+                                <div class="collapsible-section">
+                                    <button class="collapsible-button">
+                                        <span class="collapsible-text">Tests für Adaptive Stopping</span>
+                                        <span class="collapsible-icon">+</span>
+                                    </button>
+                                    <div class="collapsible-content">
+                                        <!-- Your collapsible section content goes here -->
+                                        <p style="margin-bottom: 10px;">Hallo und herzlich willkommen zu einem Beispiel für einen A/B-Test, den ich zusammengestellt habe. Was ich hier präsentiere, unterscheidet sich ein wenig von einem einfachen A/B-Test. Im Wesentlichen habe ich einen <a href="https://github.com/liuchbryan/oce-dataset">Dataset</a>, der aus 48 echten Experimenten besteht, die meisten mit mehreren Varianten, durchgeführt auf einer E-Commerce-Website (nicht von mir). Der Datensatz ermöglicht es, einen wichtigen Aspekt moderner A/B-Tests zu üben - das adaptive Stoppen. Adaptives Stoppen bedeutet, dass ein Experimentator einen A/B-Test beendet, wenn bestimmte Bedingungen erfüllt sind. Dies kann Zeit und Geld sparen und die Vielfalt der Optionen eines A/B-Tests erweitern. 
+                                        </p>
+                                        <p style="margin-bottom: 10px;">Ein Beispiel: Ein Unternehmen testet 8 neue Werbungen. Sie haben auch eine alte Werbung als Kontrolle. Ohne adaptives Stoppen könnte das Unternehmen alle 8 Werbungen für eine bestimmte Zeit (z. B. eine Woche) laufen lassen, auch wenn einige der Werbevarianten nicht funktionieren. Mit dem adaptiven Stoppen kann ein Unternehmen in regelmäßigen Abständen überprüfen, ob eine Werbung wirksam ist, und die Varianten, die nicht wirksam sind, vorzeitig beenden, um mehr Daten über diejenigen zu sammeln, die wirksam sind.
+                                        </p>
+                                        <p style="margin-bottom: 10px;">Jedes Experiment enthält eine oder mehrere Varianten sowie Daten über eine Kontrolle. Ich werde die Auswirkung des frühen Abbruchs analysieren, um die optimalen Abbruchbedingungen zu bestimmen. Alle Analysen wurden mit R durchgeführt.
+                                        </p>
+                                        <p style="margin-bottom: 10px;">Lassen Sie uns beginnen.</p>
+                                        <p style="margin-bottom: 10px;">Zuerst verwende ich einen einfachen T-Test als statistisches Modell. Obwohl fortgeschrittenere Methoden wie Bayesische Hypothesentests eine mögliche Option wären, ist der T-Test für den Vergleich zweier Verteilungen ausreichend. Da der Datensatz mir die Mittelwerte der Metriken für die Kontroll- und die Behandlungsgruppe sowie die Varianz liefert, habe ich vor dem Vergleich eine Verteilung mit jeweils zehntausend Datenpunkten simuliert.</p>
+                                        <p style="margin-bottom: 10px;">In den ursprünglichen Experimenten wurde der Fortschritt der A/B-Tests alle 12 Stunden überprüft. Es gab keine Informationen darüber, was den Abbruch eines bestimmten Tests auslöste, aber ich wählte zwei aufeinanderfolgende Überprüfungen aus, bei denen kein signifikanter Unterschied zwischen der Behandlungs- und der Kontrollgruppe festgestellt wurde. Darüber hinaus gab es vier verschiedene Metriken für Erfolg oder Misserfolg: In diesem Fall entschied ich mich, konservativ zu sein und jedes Experiment als gescheitert zu betrachten, wenn eine der Metriken nicht erfüllt war.</p>
+                                        <p style="margin-bottom: 10px;">Wie unten zu sehen ist, scheiterten etwa 21,3 % der A/B-Tests an diesen Kriterien. Wenn dies der Fall war, scheiterten sie im Durchschnitt nach 62,1 Stunden. Die Häufung war sehr hoch, da nur nach 60 und 72 Stunden ein guter Misserfolg verzeichnet wurde. In der Praxis bedeutet dies, dass die A/B-Tests etwa drei Tage gebraucht hätten, um zuverlässige Ergebnisse zu liefern. Eine frühere Beendigung der Tests hätte zu einem geringeren Verlust an wertvollen Informationen geführt. </p>
+                                        <table style="width:30%; border-collapse: collapse; margin-bottom: 10px;">
+                                            <tr>
+                                                <td>Prozent Durchgefallen
+                                                </td>
+                                                <td>21.3%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Durchschnittliche Ausfallstunde</td>
+                                                <td>62.1</td>
+                                            </tr>
+                                        </table>
+                                        <p style="margin-bottom: 10px;">Die verwendeten Bedingungen waren jedoch nicht in Stein gemeißelt. Bei einer Werbekampagne könnte ein Unternehmen beispielsweise teure Anzeigen schnell entfernen wollen, wenn sie nicht so gut abschneiden wie die Benchmark. Würde man dies jedoch zu oft tun, würde dies wahrscheinlich zum Verlust wertvoller Informationen führen.</p>
+                                        <table style="width:70%; border-collapse: collapse; margin-bottom: 10px;">
+                                            <tr>
+                                                <th>Bedingungen</th>
+                                                <th>Prozent Durchgefallen</th>
+                                                <th>Durchschnittliche Ausfallstunde</th>
+                                            </tr>
+                                            <tr>
+                                                <td>Stündliche Überprüfung</td>
+                                                <td>94.3%</td>
+                                                <td>6.6</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Alle 3 Stunden überprüfen</td>
+                                                <td>95.3%</td>
+                                                <td>16.9</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Alle 6 Stunden überprüfen</td>
+                                                <td>95%</td>
+                                                <td>31.2</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Alle 24 Stunden überprüfen</td>
+                                                <td>16.7%</td>
+                                                <td>120</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Alle 12 Stunden überprüfen, bei einmaligem Versagen entfernen</td>
+                                                <td>97.9%</td>
+                                                <td>37.3</td>
+                                            </tr>
+                                        </table>
+                                        <p style="margin-bottom: 10px;">In diesem bestimmten Fall führen die unterschiedlichen Bedingungen zu dramatischen Veränderungen. Wenn die Daten alle 1, 3 oder 6 Stunden überprüft werden, ergibt sich eine Fehlerquote von etwa 95 %. Das ist nicht unbedingt schlecht - wenn das Ziel darin besteht, schnell viele Optionen auszuprobieren, ist das eine gute Sache. Ähnlich verhält es sich, wenn man alle 12 Stunden testet, aber nach einem Fehlschlag aufhört, was die Fehlerquote ebenfalls drastisch auf 97,9 % erhöht. Auch hier könnte dies von Vorteil sein, aber auch einfach zu empfindlich sein.</p>
+                                        
+                                    </div>
+                                </div>
                                 <div class="collapsible-section">
                                     <button class="collapsible-button">
                                         <span class="collapsible-text">Marketing Beispiel</span>
