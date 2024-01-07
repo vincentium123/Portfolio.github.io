@@ -1,0 +1,1027 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Jonathan Vincent Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+        <style>
+            .table-container {
+            overflow-y: auto; /* Add scrollbar if the content overflows the container */
+        }
+        p {
+            margin-bottom: 10px;
+        }
+            /* Style for the table */
+            table {
+              border-collapse: collapse;
+              width: 100%;
+            }
+        
+            /* Style for the table borders */
+            table, th, td {
+              border: 1px solid black;
+            }
+        
+            /* Additional styling for table headers */
+            th, td {
+              padding: 8px;
+              text-align: left;
+            }
+        
+            /* Set the width of the second column based on content */
+            th:nth-child(1), td:nth-child(1) {
+              width: auto; /* or use a specific width value if needed */
+            }
+            
+          </style>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper" class="fade-in">
+				
+
+				<!-- Intro -->
+					<div id="intro">
+						<h1>Jonathan Vincent<br />
+						Data Analyst Portfolio</h1>
+						<p>Data Analyst | R, Python, SQL, Excel, Tableau<br />
+						</p>
+					</div>
+
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="index auf deutsch.html">Projekte</a></li>
+							<li><a href="ubermich.html">Über mich</a></li>
+                            <li><a href="index.html">Portfolio in English</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="https://www.linkedin.com/in/jonathan-vincent-520259165/" class="icon brands fa-linkedin"><span class="label">Linkedin</span></a></li>
+							<li><a href="https://github.com/vincentium123" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<article class="post featured">
+                            <header class="major">
+                                <h2>Die Hugo Awards</h2>
+                                <p>Hallo und herzlich willkommen zu meiner Analyse der Hugo Awards! Die Hugos gelten in der Regel als der wichtigste Preis im Bereich Science Fiction, und unter den Gewinnern und Nominierten befinden sich viele Klassiker des Genres. Jedes Jahr nominieren die Teilnehmer des WorldCon, des weltweit größten Kongresses für Print-Science-Fiction, die Bücher, die sie für die besten Romane des Jahres halten. Die fünf meistnominierten Romane kommen dann in eine letzte Abstimmungsrunde, in der einer ausgewählt wird, um den Hugo Award zu gewinnen. Das bedeutet, dass es jedes Jahr vier Nominierte und einen Gewinner gibt (außer in den wenigen Jahren, in denen zwei Romane den ersten Platz belegen).</p>
+                                <p>Ich wollte ein paar Fragen dazu beantworten und habe mich an Goodreads gewandt, die weltweit größte Social-Media-Plattform rund um das Thema Bücher. Ich habe eine Liste aller Gewinner und Nominierten des Hugo Award zusammengestellt, beginnend mit dem Jahr 1951 bis zum heutigen Tag - insgesamt fast 400 Romane. Dann benutzte ich das ausgezeichnete <a href="https://github.com/havanagrawal/GoodreadsScraper">GoodreadsScraper</a> von Havan Agrawal, um die Daten zu scrapen, und führte eine Datenbereinigung mit R durch. Sobald ich einen sauberen Datensatz hatte, führte ich eine Analyse mit PostgreSQL in pgAdmin 4 durch.</p>
+                                <p>Die übergreifende Frage, die mir bei dieser Analyse vorschwebte, ist ziemlich einfach: Wie schneiden die Gewinner der Hugo Awards im Vergleich zu den Nominierten ab? Es gibt viele verschiedene Möglichkeiten, diese Frage zu beantworten, daher habe ich sie in mehrere Bereiche unterteilt.</p>
+                            
+                                <p>Um große Codeblöcke im Text zu vermeiden, habe ich am Ende jedes Abschnitts Links zu dem SQL-Code eingefügt, den ich für jeden Abschnitt geschrieben habe. Außerdem habe ich den vollständigen <a href="https://github.com/vincentium123/Awards">Datensatz</a> öffentlich zugänglich gemacht, falls Sie daran interessiert sind.</p>
+                            
+                                <p>Los geht's!</p>
+                                <div class="collapsible-section">
+                                    <button class="collapsible-button">
+                                        <span class="collapsible-text">1. Sind Hugo-Gewinner besser als Nominierte? Sind sie beliebter?</span>
+                                        <span class="collapsible-icon">+</span>
+                                    </button>
+                                    <div class="collapsible-content">
+                                        <!-- Your collapsible section content goes here -->
+                                        <p style="margin-bottom: 10px;
+                                        text-indent: 20px;"> Goodreads hat Millionen von Nutzern, die Bücher auf einer Skala von 1 bis 5 bewerten können. Dies ist ein ziemlich guter Maßstab für die öffentliche Wahrnehmung eines Buches und seine Beliebtheit. Je höher die Bewertung, desto besser wird es von der Öffentlichkeit wahrgenommen; je mehr Bewertungen, desto beliebter ist es.</p>
+
+                                        <p style="margin-bottom: 10px;
+                                        text-indent: 20px;"> Zunächst wollte ich wissen, ob die Gewinner des Hugo Award besser bewertet wurden als die Nominierten. Wenn die Nominierten gleich (oder höher) bewertet werden als die Gewinner, dann unterscheidet sich der Auswahlprozess für die Hugos eindeutig von der Vorstellung der Allgemeinheit von einem guten Buch.</p>
+                                    
+                                        <p style="margin-bottom: 10px;
+                                        text-indent: 20px;"> In diesem Fall gibt es einen Unterschied - knapp. Die Hugo-Gewinner haben eine durchschnittliche Bewertung von 4, während die Nominierten eine von 3,9 haben. Dies ist zwar statistisch gesehen signifikant, aber in der Praxis ist der Unterschied eher vernachlässigbar. Es zeigt jedoch, dass die Hugos in der Regel eine gute Auswahl an Nominierten hervorbringen - es ist nicht so, dass es ein gutes Buch und vier mittelmäßige gibt.</p>
+                                    
+                                        <p style="margin-bottom: 10px;
+                                        text-indent: 20px;"> Die Hugo-Gewinner sind zwar nicht unbedingt besser als die Nominierten, aber sie sind definitiv beliebter. Der durchschnittliche Gewinner-Roman hat 208.807 Bewertungen, während der durchschnittliche Nominierte nur 66.550 hat. Dies gilt selbst dann, wenn man die 15 beliebtesten Bücher der Liste mit jeweils über 500 000 Bewertungen herausnimmt. Dabei handelt es sich größtenteils um Bücher aus beliebten Serien wie Harry Potter, die Chroniken von Narnia und Game of Thrones sowie um Klassiker wie Slaughterhouse Five und Fahrenheit 451. In diesem Fall haben die Gewinner immer noch einen Durchschnitt von 79.900 Bewertungen gegenüber 26.085 Bewertungen der Nominierten.</p>
+                                        <table style="width: 50%; margin: auto;">
+                                            <tr>
+                                                <th></th>
+                                                <th>Gewinner</th>
+                                                <th>Nominierte</th>
+                                                <th>Unterschied</th>
+                                            </tr>
+                                            <tr>
+                                                <td>Bewertung</td>
+                                                <td>4.0</td>
+                                                <td>3.9</td>
+                                                <td>0.1</td>
+                                            </tr>
+                                            <tr>
+                                                <td># von Reviews</td>
+                                                <td>208,807</td>
+                                                <td>66,550</td>
+                                                <td>142,257</td>
+                                            </tr>
+                                            <tr>
+                                                <td># von Reviews (<500,000)</td>
+                                                <td>79,900</td>
+                                                <td>26,085</td>
+                                                <td>53,815</td>
+                                            </tr>
+                                        </table>
+
+                                        <button onclick="openSqlCodeWindow('#section1')" style="font-size: 16px; margin: auto;">SQL Code Hier</button>
+
+
+
+                                    </div>
+                                </div>
+                                <div class="collapsible-section">
+                                    <button class="collapsible-button">
+                                        <span class="collapsible-text">2. Welches sind die besten und schlechtesten Nominierten und Gewinner? </span>
+                                        <span class="collapsible-icon">+</span>
+                                    </button>
+                                    <div class="collapsible-content">
+                                        <!-- Your collapsible section content goes here -->
+                                        <p style="margin-bottom: 10px;
+                                        text-indent: 20px;">Wie Sie vielleicht schon erraten haben, lese ich gerne Science Fiction. Als ich dieses Projekt in Angriff nahm, hatte ich eine ziemlich gute Vorstellung davon, was ernsthafte Science-Fiction-Leser für die besten und schlechtesten Hugo-Gewinner halten. Hyperion, Dune, Ender's Game, The Demolished Man, Fahrenheit 451 und viele andere Romane gelten weithin als Klassiker des Genres, während 1981 oft als ein besonders schlechtes Jahr gilt. Deshalb wollte ich wissen, wie sich meine Wahrnehmung mit der Weisheit der Masse deckt.</p>
+                                        <p style="margin-bottom: 10px;
+                                        text-indent: 20px;">Beginnen wir mit den besten Büchern, sowohl den Gewinnern als auch den Nominierten. Die Gewinner sind fett gedruckt.
+</p>                                        
+                                        <div class="table-container" style="height:300px; margin-bottom: 10px;">
+                                            <table style="width:90%; margin:auto;">
+                                            <tr>
+                                                <th>Buch</th>
+                                                <th>Autor</th>
+                                                <th>Jahr der Nominierung</th>
+                                                <th>Durchschnittliche Bewertung</th>
+                                            </tr>
+                                            <tr>
+                                                <td class="title">Harry Potter and the Prisoner of Azkaban</td>
+                                                <td>J.K. Rowling</td>
+                                                <td>2000</td>
+                                                <td>4.58</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="title"><b>Harry Potter and the Goblet of Fire</b></td>
+                                                <td>J.K. Rowling</td>
+                                                <td>2001</td>
+                                                <td>4.56</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Skin Game</td>
+                                                <td>Jim Butcher</td>
+                                                <td>2015</td>
+                                                <td>4.56</td>
+                                            </tr>
+                                            <tr>
+                                                <td>A Storm of Swords</td>
+                                                <td>George R.R. Martin</td>
+                                                <td>2001</td>
+                                                <td>4.54</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Project Hail Mary</td>
+                                                <td>Andy Weir</td>
+                                                <td>2022</td>
+                                                <td>4.51</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="title"><b>Network Effect</b></td>
+                                                <td>Martha Wells</td>
+                                                <td>2021</td>
+                                                <td>4.48</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Memory</td>
+                                                <td>Lois McMaster Bujold</td>
+                                                <td>1997</td>
+                                                <td>4.42</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Deaths End</td>
+                                                <td>Liu Cixin, Ken Liu</td>
+                                                <td>2017</td>
+                                                <td>4.43</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Warbound</td>
+                                                <td>Larry Correia</td>
+                                                <td>2014</td>
+                                                <td>4.42</td>
+                                            </tr>
+                                            <tr>
+                                                <td>The Galaxy, and the Ground Within</td>
+                                                <td>Becky Chambers</td>
+                                                <td>2022</td>
+                                                <td>4.41</td>
+                                            </tr>
+                                        </table></div>
+                                        <p style="margin-bottom: 10px;
+                                        text-indent: 20px;">Die Ergebnisse waren überhaupt nicht das, was ich erwartet hatte. Nur zwei der 10 besten Bücher waren Gewinner. Keines der Ergebnisse sind Bücher, die ich als Klassiker des Genres bezeichnen würde. Stattdessen dominieren beliebte Serien - J.K. Rowlings Harry Potter, G.R.R. Martins Game of Thrones, Jim Butchers Dresden Files und eine Handvoll anderer, viel neuerer Bücher.</p>                                        <p style="margin-bottom: 10px;
+                                        text-indent: 20px;">Betrachtet man nur die Gewinner, so wird die Dominanz der neueren Bücher noch deutlicher.
+</p>
+                                        <div class="table-container" style="height:300px; margin-bottom: 10px;">
+                                            <table style="width:90%; margin:auto;">
+                                                <tr>
+                                                    <th>Buch</th>
+                                                    <th>Autor</th>
+                                                    <th>Gewinner-Jahr</th>
+                                                    <th>Durchschnittliche Bewertung</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>Harry Potter and the Goblet of Fire</td>
+                                                    <td>J.K. Rowling</td>
+                                                    <td>2001</td>
+                                                    <td>4.56</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="title">Network Effect</td>
+                                                    <td>Martha Wells</td>
+                                                    <td>2021</td>
+                                                    <td>4.48</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>The Stone Sky</td>
+                                                    <td>N.K. Jemisin</td>
+                                                    <td>2018</td>
+                                                    <td>4.35</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>A Desolation Called Peace</td>
+                                                    <td>Arkady Martine</td>
+                                                    <td>2022</td>
+                                                    <td>4.33</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Mirror Dance</td>
+                                                    <td>Lois McMaster Bujold</td>
+                                                    <td>1995</td>
+                                                    <td>4.31</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>A Deepness in the Sky</td>
+                                                    <td>Vernor Vinge</td>
+                                                    <td>2000</td>
+                                                    <td>4.31</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>The Fifth Season</td>
+                                                    <td>N.K. Jemisin</td>
+                                                    <td>2016</td>
+                                                    <td>4.31</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Ender's Game</td>
+                                                    <td>Orson Scott Card</td>
+                                                    <td>1986</td>
+                                                    <td>4.31</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>The Obelisk Gate</td>
+                                                    <td>N.K. Jemisin</td>
+                                                    <td>2017</td>
+                                                    <td>4.31</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Barrayar</td>
+                                                    <td>Lois McMaster Bujold</td>
+                                                    <td>1992</td>
+                                                    <td>4.30</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <p style="margin-bottom: 10px;
+                                        text-indent: 20px;">Die Hugo Awards werden seit 1953 regelmäßig verliehen, aber das älteste Buch auf dieser Liste ist "Ender's Game", das den Preis 1986 erhielt. Obwohl ich viele dieser Bücher gelesen habe und die meisten von ihnen sehr mag, würde ich persönlich sie nicht als besser bezeichnen als Romane, die in den 50er, 60er und 70er Jahren veröffentlicht wurden. In den Goodreads-Bewertungen scheint es eine starke Tendenz in Richtung Neuheit zu geben. Ich bin mir nicht ganz sicher, was der Grund dafür ist, aber er ist definitiv vorhanden.
+                                        </p>                              
+                                        <table style="width:90%; margin:auto; margin-bottom: 10;">
+                                            <tr>
+                                                <th></th>
+                                                <th>1950er</th>
+                                                <th>1960er</th>
+                                                <th>1970er</th>
+                                                <th>1980er</th>
+                                                <th>1990er</th>
+                                                <th>2000er</th>
+                                                <th>2010er</th>
+                                                <th>2020er</th>
+                                            </tr>
+                                            <tr>
+                                                <td>Nominierte</td>
+                                                <td>3.813</td>
+                                                <td>3.809</td>
+                                                <td>3.872</td>
+                                                <td>3.937</td>
+                                                <td>3.922</td>
+                                                <td>3.952</td>
+                                                <td>3.972</td>
+                                                <td>4.107</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Gewinner</td>
+                                                <td>3.646</td>
+                                                <td>3.934</td>
+                                                <td>4.035</td>
+                                                <td>4.038</td>
+                                                <td>4.111</td>
+                                                <td>4.048</td>
+                                                <td>4.006</td>
+                                                <td>4.273</td>
+                                            </tr>
+                                        </table>
+                                        <p style="margin-bottom: 10px;
+                                        text-indent: 20px;">Sie können dies in der nachstehenden Aufteilung nach Jahrzehnten deutlich erkennen, insbesondere bei den Gewinnern. Es gibt einen leichten, aber leicht erkennbaren Trend nach oben in der Rangliste, wobei neuere Bücher im Durchschnitt besser bewertet werden.</p>
+                                        <p style="margin-bottom: 10px;
+                                        text-indent: 20px;">Und nun die Umkehrung: Was sind die schlechtesten Gewinner und Nominierten?</p> 
+                                        
+                                        <div class="table-container" style="height:300px; margin-bottom: 10px;">
+                                            <table style="width:90%; margin:auto;">
+                                                <tr>
+                                                    <th>Nominierte</th>
+                                                    <th>Jahr</th>
+                                                    <th>Durchschnittliche Bewertung</th>
+                                                    <th>Gewinner</th>
+                                                    <th>Jahr</th>
+                                                    <th>Durchschnittliche Bewertung</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>They'd Rather Be Right</td>
+                                                    <td>1955</td>
+                                                    <td>3.05</td>
+                                                    <td>They'd Rather Be Right</td>
+                                                    <td>1955</td>
+                                                    <td>3.05</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>The Big Time</td>
+                                                    <td>1958</td>
+                                                    <td>3.23</td>
+                                                    <td>The Big Time</td>
+                                                    <td>1958</td>
+                                                    <td>3.23</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Star Light</td>
+                                                    <td>1971</td>
+                                                    <td>3.29</td>
+                                                    <td>The Wanderer</td>
+                                                    <td>1965</td>
+                                                    <td>3.40</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Chthon</td>
+                                                    <td>1968</td>
+                                                    <td>3.31</td>
+                                                    <td>The Man in the High Castle</td>
+                                                    <td>1963</td>
+                                                    <td>3.60</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Darwinia</td>
+                                                    <td>1999</td>
+                                                    <td>3.37</td>
+                                                    <td>A Case of Conscience</td>
+                                                    <td>1959</td>
+                                                    <td>3.62</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Remake</td>
+                                                    <td>1996</td>
+                                                    <td>3.39</td>
+                                                    <td>Among Others</td>
+                                                    <td>2012</td>
+                                                    <td>3.70</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>The Wanderer</td>
+                                                    <td>1965</td>
+                                                    <td>3.40</td>
+                                                    <td>The Yiddish Policemen's Union</td>
+                                                    <td>2008</td>
+                                                    <td>3.71</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>The Squares of the City</td>
+                                                    <td>1966</td>
+                                                    <td>3.40</td>
+                                                    <td>The Windup Girl</td>
+                                                    <td>2010</td>
+                                                    <td>3.75</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>That Sweet Little Old Lady</td>
+                                                    <td>1960</td>
+                                                    <td>3.42</td>
+                                                    <td>Forever Peace</td>
+                                                    <td>1998</td>
+                                                    <td>3.75</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Fire Time</td>
+                                                    <td>1975</td>
+                                                    <td>3.44</td>
+                                                    <td>Rainbows End</td>
+                                                    <td>2007</td>
+                                                    <td>3.77</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <p style="margin-bottom: 10px;
+                                        text-indent: 20px;">Im Großen und Ganzen überraschen mich diese Ergebnisse nicht sonderlich. Aus der früheren Analyse geht hervor, dass ältere Bücher im Durchschnitt schlechter bewertet werden als neuere, und das können Sie hier sehen. Viele dieser Bücher sind aus den 50er und 60er Jahren. 
+</p>                                        <p style="margin-bottom: 10px;
+                                        text-indent: 20px;">Dass "They'd Rather Be Right" das schlechteste Buch ist, ist für mich keine Überraschung - ich habe gehört, dass es absolut schrecklich ist. Der Rest sind größtenteils Bücher, von denen ich noch nie etwas gehört habe, was auch Sinn macht. Ich habe die meisten von ihnen nicht gelesen, daher weiß ich nicht, ob und welche Gemeinsamkeiten sie haben.
+</p>
+
+                                        <button onclick="openSqlCodeWindow('#section2')" style="font-size: 16px; margin: auto;">SQL Code Hier</button>                                        
+                                    </div>
+                                </div>
+                                <div class="collapsible-section">
+                                    <button class="collapsible-button">
+                                        <span class="collapsible-text">3. Welches sind die besten Jahre? Die schlechtesten?</span>
+                                        <span class="collapsible-icon">+</span>
+                                    </button>
+                                    <div class="collapsible-content">
+                                        <!-- Your collapsible section content goes here -->
+                                        <p style="margin-bottom: 10px;text-indent: 20px;">Wir haben also die besten und die schlechtesten Bücher gesehen, aber was ist mit den besten und den schlechtesten Jahren?
+                                        </p>
+                                        <table style="width:50%; margin:auto;margin-bottom: 10px;">
+                                            <tr>
+                                                <th>Schlechteste Jahre</th>
+                                                <th>Jahr Durchschnitt</th>
+                                                <th>Beste Jahre</th>
+                                                <th>Jahr Durchschnitt</th>
+                                            </tr>
+                                            <tr>
+                                                <td>1955</td>
+                                                <td>3.05</td>
+                                                <td>2000</td>
+                                                <td>4.25</td>
+                                            </tr>
+                                            <tr>
+                                                <td>1958</td>
+                                                <td>3.23</td>
+                                                <td>2021</td>
+                                                <td>4.24</td>
+                                            </tr>
+                                            <tr>
+                                                <td>1968</td>
+                                                <td>3.62</td>
+                                                <td>2022</td>
+                                                <td>4.21</td>
+                                            </tr>
+                                            <tr>
+                                                <td>1965</td>
+                                                <td>3.63</td>
+                                                <td>2001</td>
+                                                <td>4.16</td>
+                                            </tr>
+                                            <tr>
+                                                <td>1971</td>
+                                                <td>3.68</td>
+                                                <td>2016</td>
+                                                <td>4.15</td>
+                                            </tr>
+                                        </table>
+                                        <p style="margin-bottom: 10px;text-indent: 20px;">Die Ergebnisse passen gut zu der Vorliebe für Neues, die ich im letzten Abschnitt aufgedeckt habe. Die schlechtesten Jahre liegen in den 50er, 60er und 70er Jahren, während die besten Jahre alle seit 2000 liegen. Auch für mich ist es nicht überraschend, dass die schlechtesten Jahre Bücher enthalten, von denen ich noch nie gehört habe - sie sind einfach nicht mehr im Gespräch. Die besten Jahrgänge enthalten dagegen Bücher von Autoren, die ich für die besten zeitgenössischen Science-Fiction- und Fantasy-Autoren halte: N.K. Jemisin, Susanna Clarke, J.K. Rowling, George R. R. Martin und Neil Stephenson, um nur einige zu nennen.
+                                        </p>                                        
+                                        <button onclick="openSqlCodeWindow('#section3')" style="font-size: 16px; margin: auto;">SQL Code Hier</button>   
+
+                                    </div>
+                                </div>
+                                <div class="collapsible-section">
+                                    <button class="collapsible-button">
+                                        <span class="collapsible-text">4. Welches sind die unbeliebtesten Nominierte?</span>
+                                        <span class="collapsible-icon">+</span>
+                                    </button>
+                                    <div class="collapsible-content">
+                                        <!-- Your collapsible section content goes here -->
+                                        <p style="margin-bottom: 10px;text-indent: 20px;">Welches sind die unbeliebtesten Nominierte?                                        </p>
+                                        <div class="table-container" style="height:300px; margin-bottom: 10px;">
+                                            <table style="width:90%; margin:auto;">
+                                                <tr>
+                                                    <th>Buch</th>
+                                                    <th>Autor</th>
+                                                    <th>Jahr</th>
+                                                    <th>Durchschnittliche Bewertung</th>
+                                                    <th># von Ratings</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>Jem</td>
+                                                    <td>Frederik Pohl</td>
+                                                    <td>1980</td>
+                                                    <td>3.83</td>
+                                                    <td>6</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>When Harlie Was One</td>
+                                                    <td>David Gerrold</td>
+                                                    <td>1973</td>
+                                                    <td>4.27</td>
+                                                    <td>15</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Second Ending</td>
+                                                    <td>James White</td>
+                                                    <td>1962</td>
+                                                    <td>3.65</td>
+                                                    <td>105</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>SYLVA</td>
+                                                    <td>Jean Marcel Bruller</td>
+                                                    <td>1963</td>
+                                                    <td>3.88</td>
+                                                    <td>106</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>The Quiet Pools</td>
+                                                    <td>Michael P. Kube-McDowell</td>
+                                                    <td>1991</td>
+                                                    <td>3.67</td>
+                                                    <td>114</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Not This August</td>
+                                                    <td>C.M. Kornbluth</td>
+                                                    <td>1956</td>
+                                                    <td>3.48</td>
+                                                    <td>183</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Three to Conquer</td>
+                                                    <td>Eric Frank Russell</td>
+                                                    <td>1956</td>
+                                                    <td>3.80</td>
+                                                    <td>184</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Day of the Minotaur</td>
+                                                    <td>Thomas Burnett Swann</td>
+                                                    <td>1967</td>
+                                                    <td>3.64</td>
+                                                    <td>193</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>The Butterfly Kid</td>
+                                                    <td>Chester Anderson</td>
+                                                    <td>1968</td>
+                                                    <td>3.74</td>
+                                                    <td>202</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>The Planet Buyer</td>
+                                                    <td>Cordwainer Smith</td>
+                                                    <td>1965</td>
+                                                    <td>3.83</td>
+                                                    <td>241</td>
+                                                </tr>
+                                            </table>
+                                        </div>                                        
+                                        <p style="margin-bottom: 10px;text-indent: 20px;">Auch auf die Gefahr hin, dass es offensichtlich klingt: Ich habe noch nie von einem dieser Bücher gehört. Bei vielen von ihnen habe ich noch nicht einmal von den Autoren gehört. Auch hier zeigt sich wieder die Voreingenommenheit gegenüber Neuerscheinungen - diese Bücher stammen größtenteils aus den 50er und 60er Jahren, nicht aus jüngeren Jahrzehnten. Diese Bücher haben auch recht niedrige Bewertungen - nur eines liegt über 4.
+                                        </p>
+
+                                        <div class="table-container" style="height:300px; margin-bottom: 10px;">
+                                            <table style="width:90%; margin:auto;">
+                                                <tr>
+                                                    <th>Buch</th>
+                                                    <th>Autor</th>
+                                                    <th>Jahr</th>
+                                                    <th>Durchschnittliche Bewertung</th>
+                                                    <th># von Ratings</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>They'd Rather Be Right</td>
+                                                    <td>Mark Clifton, Frank Riley</td>
+                                                    <td>1955</td>
+                                                    <td>3.05</td>
+                                                    <td>1236</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>The Wanderer</td>
+                                                    <td>Fritz Leiber</td>
+                                                    <td>1965</td>
+                                                    <td>3.4</td>
+                                                    <td>3054</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>The Big Time</td>
+                                                    <td>Fritz Leiber</td>
+                                                    <td>1958</td>
+                                                    <td>3.23</td>
+                                                    <td>4056</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>A Case of Conscience</td>
+                                                    <td>James Blish</td>
+                                                    <td>1959</td>
+                                                    <td>3.62</td>
+                                                    <td>6452</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Farmer in the Sky</td>
+                                                    <td>Robert A. Heinlein</td>
+                                                    <td>1951</td>
+                                                    <td>3.77</td>
+                                                    <td>9722</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Cyteen</td>
+                                                    <td>C.J. Cherryh</td>
+                                                    <td>1989</td>
+                                                    <td>4</td>
+                                                    <td>10226</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Where Late the Sweet Birds Sang</td>
+                                                    <td>Kate Wilhelm</td>
+                                                    <td>1977</td>
+                                                    <td>3.85</td>
+                                                    <td>10234</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Dreamsnake</td>
+                                                    <td>Vonda N. McIntyre</td>
+                                                    <td>1979</td>
+                                                    <td>3.87</td>
+                                                    <td>10467</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>This Immortal</td>
+                                                    <td>Roger Zelazny</td>
+                                                    <td>1966</td>
+                                                    <td>3.91</td>
+                                                    <td>11661</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>The Snow Queen</td>
+                                                    <td>Joan D. Vinge</td>
+                                                    <td>1981</td>
+                                                    <td>3.95</td>
+                                                    <td>12743</td>
+                                                </tr>
+                                            </table>
+                                        </div>   
+                                        <p style="margin-bottom: 10px;text-indent: 20px;">Etwas interessanter ist die Betrachtung der unbeliebtesten Gewinner. Es überrascht nicht, dass ältere Bücher dominieren. Die anderen scheinen insgesamt (logischerweise) von weniger berühmten Autoren zu stammen. Der berühmteste Autor auf der Liste, Robert Heinlein, ist ein interessanter Fall. "Farmer in the Sky" ist ein "Juvenile"- die alte Bezeichnung für ein Buch für junge Erwachsene. Wahrscheinlich suchen nur wenige junge Erwachsene nach einem ziemlich obskuren Buch von vor 70 Jahren, was bedeutet, dass nur echte Science-Fiction-Fans dieses Buch lesen werden, und die sind einfach nicht die Zielgruppe. Cyteen von C.J. Cherryh sticht mir ebenfalls ins Auge - sie ist unter ernsthaften Science-Fiction-Fans eine große Nummer -, aber dafür gibt es eine ziemlich einfache mögliche Erklärung: Das Buch ist riesig. Ich besitze ein Exemplar, das 1200 Seiten lang ist. Ich habe zweimal versucht, es zu lesen, und habe es nie beendet.
+                                        </p>
+
+
+                                        <button onclick="openSqlCodeWindow('#section4')" style="font-size: 16px; margin: auto;">SQL Code Hier</button> 
+                                    </div>
+                                </div>
+                                <div class="collapsible-section">
+                                    <button class="collapsible-button">
+                                        <span class="collapsible-text">5. Welches sind die unbeliebtesten Jahre? Am beliebtesten? </span>
+                                        <span class="collapsible-icon">+</span>
+                                    </button>
+                                    <div class="collapsible-content">
+                                        <!-- Your collapsible section content goes here -->
+                                        <p style="margin-bottom: 10px;text-indent: 20px;">Etwas interessanter wird es, wenn wir uns die am wenigsten und die am meisten beliebten Jahre ansehen. Die am wenigsten beliebten Jahre decken ein überraschend breites Spektrum ab - bevor ich die Analyse durchführte, dachte ich, dass alle in den 1950er Jahren liegen würden. 1995 ist eine besondere Überraschung. Bei den Werken aus diesem Jahr scheint es sich jedoch um relativ unbedeutende Werke von weniger bekannten Autoren zu handeln. Vielleicht war es einfach ein schlechtes Jahr für die Science Fiction. 
+                                        </p>  
+                                        <table style="width:90%; margin:auto;margin-bottom: 10px;">        <tr>
+                                            <th>Jahr</th>
+                                            <th># von Reviews</th>
+                                            <th>Jahr</th>
+                                            <th># von Reviews</th>
+                                        </tr>
+                                        <tr>
+                                            <td>1965</td>
+                                            <td>1104</td>
+                                            <td>2001</td>
+                                            <td>873516</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1955</td>
+                                            <td>1236</td>
+                                            <td>2000</td>
+                                            <td>844560</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1958</td>
+                                            <td>4056</td>
+                                            <td>1951</td>
+                                            <td>555370</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1969</td>
+                                            <td>5766.33</td>
+                                            <td>1954</td>
+                                            <td>525492</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1995</td>
+                                            <td>5852</td>
+                                            <td>1970</td>
+                                            <td>381984</td>
+                                        </tr>
+                                    </table>
+                                      
+                                        <p style="margin-bottom: 10px;text-indent: 20px;">Interessant sind die beliebtesten Jahre. 2000 und 2001 sind durch Harry Potter und Game of Thrones vertreten. 1970 gibt es zwei Klassiker - The Left Hand of Darkness und Slaughterhouse-Five, die beide in den High Schools in den USA häufig gelesen werden. 
+                                        </p>                                        
+                                        <p style="margin-bottom: 10px;text-indent: 20px;">Was mich überraschte, war die Aufnahme der Jahre 1951 und 1954, die beide dem Trend zu widersprechen scheinen, dass ältere Bücher weniger beliebt und weniger angesehen sind. Vor allem sind diese beiden Jahre einzigartig. Über die nominierten Bücher wurde nicht in den Jahren 1951 und 1954 abgestimmt, sondern in den Jahren 2001 und 2004. Da die Hugos in diesen Jahren nicht stattfanden, organisierten Science-Fiction-Fans fünfzig Jahre später einen "Retro-Hugo". Wahrscheinlich wählten sie Bücher aus, die sich im Laufe der Zeit bewährt hatten, was zu einer höheren Popularität führte.
+                                        </p>                                        
+                                        <p style="margin-bottom: 10px;text-indent: 20px;">Aber das war möglicherweise egal - 1951 und 1954 waren absurd gute Jahre für die Science Fiction. Es war der Beginn des Goldenen Zeitalters des Genres, als das Medium reifte und sich von Pulp-Magazinen zu Romanen in langer Form entwickelte. 1951 erschien C.S. Lewis' berühmter The Lion, the Witch, and the Wardrobe, der immer noch ein beliebter Klassiker ist, sowie Jack Vances The Dying Earth, eine der grundlegenden Science-Fiction-Serien. Das Jahr 1954 war sogar noch besser: Ray Bradburys Fahrenheit 451, Arthur C. Clarkes Childhood's End und Isaac Asimovs The Caves of Steel gelten als die besten Science-Fiction-Romane ihrer Zeit und werden auch heute noch häufig gelesen.
+                                        </p>                                        
+                                        <p style="margin-bottom: 10px;text-indent: 20px;">Dies wirft jedoch die Frage nach einflussreichen Ausreißern auf. Wenn wir alle Bücher mit mehr als 500.000 Bewertungen aus der Stichprobe entfernen (die 15 besten Bücher), ändert sich das Bild.
+                                        </p>     
+                                        <table style="width:90%; margin:auto;margin-bottom: 10px;text-indent: 20px;"><tr>
+                                            <th>Jahr</th>
+                                            <th># von Ratings</th>
+                                        </tr>
+                                        <tr>
+                                            <td>1964</td>
+                                            <td>145805</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2016</td>
+                                            <td>137812</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2015</td>
+                                            <td>97162</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2012</td>
+                                            <td>85223</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2021</td>
+                                            <td>84823</td>
+                                        </tr>
+                                    </table>                                                                           
+                                        <p style="margin-bottom: 10px;">Der Recency Bias kommt hier wieder stark zum Tragen. In den Jahren finden sich auch Beiträge zu beliebten Serien wie Game of Thrones und The Expanse, aber auch einige Jahre, in denen einfach mehrere beliebte Einzelromane erschienen sind, wie 1964 und 2021. 
+                                        </p>
+                                        <button onclick="openSqlCodeWindow('#section5')" style="font-size: 16px; margin: auto;">SQL Code Hier</button>
+                                    </div>
+                                </div>
+                                <div class="collapsible-section">
+                                    <button class="collapsible-button">
+                                        <span class="collapsible-text">6. Wie viele Jahre hatte ein Nicht-Gewinner die höchste Bewertung?</span>
+                                        <span class="collapsible-icon">+</span>
+                                    </button>
+                                    <div class="collapsible-content">
+                                        <!-- Your collapsible section content goes here -->
+                                        <p style="margin-bottom: 10px;text-indent: 20px;">Nun: In wie vielen Jahren hatte ein Nicht-Gewinner die höchste Bewertung? Mit anderen Worten: Wie oft stimmt die Öffentlichkeit mit den Hugos überein?
+                                        </p>                                        
+                                        <p style="margin-bottom: 10px;text-indent: 20px;">Das Wichtigste zuerst: Wenn der Gewinner des Hugos nichts mit dem Gewinner der Publikumswahl zu tun hätte, würden wir immer noch eine Überschneidung von etwa 20 % erwarten, rein zufällig. Es gibt jedes Jahr fünf Nominierte, und einer gewinnt. Ich habe ein paar Jahre herausgenommen, in denen das nicht der Fall war, z. B. in den frühen 1950er Jahren, als in einigen Jahren nur der Gewinner bekannt gegeben wurde.
+                                        </p> 
+                                        <p style="margin-bottom: 10px;text-indent: 20px;">Dennoch ist der Hugo-Gewinner in 40 % der Fälle das am besten bewertete Buch des Jahres - viel mehr als der Zufall will. Es gibt einige mögliche Faktoren, die dies erklären.</p>
+                                        <div style="text-align: center;">
+                                            <img src="images/nominee rating.png" alt="" style="height: 250px; width: auto; margin: 0 auto;" />
+                                        </div>
+                                        
+                                        <p style="margin-bottom: 10px;text-indent: 20px;">Meiner Meinung nach gibt es mehrere Möglichkeiten, darüber nachzudenken - und es muss nicht nur eine davon wahr sein. Eine Möglichkeit ist, dass die Leser die Hugo-Gewinner höher bewerten, <i>weil</i> sie gewonnen haben. Sie sehen, dass der kritische Konsens hinter einem Buch steht, und sie wollen nicht dagegen verstoßen. Eine andere Möglichkeit ist, dass die Hugos für einen Literaturpreis schon recht alt sind. Die Geschmäcker haben sich geändert, die Romane wurden neu bewertet. Zum Beispiel wurde der Hugo 1966 gemeinsam an Dune von Frank Herbert und This Immortal von Robert Zelazny verliehen. Der eine gilt heute als einer der größten Science-Fiction-Romane aller Zeiten und wird als Trilogie mit allen berühmten Schauspielern (mehr oder weniger) verfilmt, der andere... nicht. Ich habe This Immortal gelesen, es ist nicht schlecht, aber es ist einfach nicht auf dem Niveau von Dune. Ein dritter Grund ist, dass die Leute, die über die Hugos abstimmen, eine selbstgewählte Gruppe von Hardcore-Science-Fiction-Fans und -Autoren sind, deren Geschmack sich nicht vollständig mit dem der Allgemeinheit deckt.</p>    
+                                        <button onclick="openSqlCodeWindow('#section6')" style="font-size: 16px; margin: auto;">SQL Code Hier</button> 
+                                    </div>
+                                </div>
+
+                                <p>Im Folgenden habe ich auf Goodreads ein paar Empfehlungen gefunden.</p>
+                                <div class="collapsible-section">
+                                    <button class="collapsible-button">
+                                        <span class="collapsible-text">Hidden Gems</span>
+                                        <span class="collapsible-icon">+</span>
+                                    </button>
+                                    <div class="collapsible-content">
+                                        <!-- Your collapsible section content goes here -->
+                                        <p style="margin-bottom: 10px;text-indent: 20px;">Ich beschloss, nach "Hidden Gems" zu suchen - Bücher, die relativ wenige Bewertungen erhalten haben, aber insgesamt gute Kritiken aufweisen. Ich definierte diese Bedingungen so, dass die Bewertungen in den oberen 25 % der Bücher liegen, die Anzahl der Bewertungen aber in den unteren 25 %. Es gab nicht viele Bücher, die diese Kriterien erfüllten - nur drei. Es sind alles ältere Bücher und von eher unbekannten Autoren. Sie scheinen sich auch sehr voneinander zu unterscheiden - eines handelt von künstlicher Intelligenz, ein anderes von einem postapokalyptischen Thriller und das dritte von einer Star-Wars-ähnlichen Weltraumfantasie.</p>                      
+                                        <table style="width:90%; margin:auto;margin-bottom: 10px;">
+                                            <tr>
+                                              <th>Buch</th>
+                                              <th>Autor</th>
+                                              <th>Jahr</th>
+                                              <th># von Ratings</th>
+                                              <th>Durchschnittliche Bewertung</th>
+                                            </tr>
+                                          <tbody>
+                                            <tr>
+                                              <td>When Harlie Was One</td>
+                                              <td>David Gerrold</td>
+                                              <td>1973</td>
+                                              <td>15</td>
+                                              <td>4.27</td>
+                                            </tr>
+                                            <tr>
+                                              <td>Emergence</td>
+                                              <td>David R. Palmer</td>
+                                              <td>1985</td>
+                                              <td>1990</td>
+                                              <td>4.13</td>
+                                            </tr>
+                                            <tr>
+                                              <td>The Witches of Karres</td>
+                                              <td>James H. Schmitz</td>
+                                              <td>1967</td>
+                                              <td>2734</td>
+                                              <td>4.16</td>
+                                            </tr>
+                                          </tbody></table>                                                              
+                                        <button onclick="openSqlCodeWindow('#rec1')" style="font-size: 16px; margin: auto;">SQL Code Hier</button> 
+                                    </div>
+                                </div>                                <div class="collapsible-section">
+                                    <button class="collapsible-button">
+                                        <span class="collapsible-text">Classic Non-Winners</span>
+                                        <span class="collapsible-icon">+</span>
+                                    </button>
+                                    <div class="collapsible-content">
+                                        <!-- Your collapsible section content goes here -->
+                                        <p style="margin-bottom: 10px;text-indent: 20px;">Was sind Klassiker, die nie den Hugo Award gewonnen haben? Goodreads bezeichnet bestimmte Romane als "Klassiker" - ich bin mir nicht sicher, was die Kriterien dafür sind. Ich habe mir alle Klassiker angesehen, die vor 2000 veröffentlicht wurden, und alle entfernt, die spätere Bücher einer Serie waren.
+                                        </p>                                              
+                                        <table style="width:90%; margin:auto;margin-bottom: 10px;"> 
+                                            <tr>
+                                              <th>Buch</th>
+                                              <th>Autor</th>
+                                              <th>Jahr</th>
+                                              <th>Durchschittliche Bewertung</th>
+                                            </tr>
+                                            <tbody>
+                                              <tr>
+                                                <td>The End of Eternity</td>
+                                                <td>Isaac Asimov</td>
+                                                <td>1956</td>
+                                                <td>4.24</td>
+                                              </tr>
+                                              <tr>
+                                                <td>The Lion, the Witch and the Wardrobe</td>
+                                                <td>C.S. Lewis</td>
+                                                <td>1951</td>
+                                                <td>4.23</td>
+                                              </tr>
+                                              <tr>
+                                                <td>The Caves of Steel</td>
+                                                <td>Isaac Asimov</td>
+                                                <td>1954</td>
+                                                <td>4.19</td>
+                                              </tr>
+                                              <tr>
+                                                <td>The Robots of Dawn</td>
+                                                <td>Isaac Asimov</td>
+                                                <td>1984</td>
+                                                <td>4.19</td>
+                                              </tr>
+                                              <tr>
+                                                <td>Cat's Cradle</td>
+                                                <td>Kurt Vonnegut Jr.</td>
+                                                <td>1964</td>
+                                                <td>4.16</td>
+                                              </tr>
+                                              <tr>
+                                                <td>The Sirens of Titan</td>
+                                                <td>Kurt Vonnegut Jr.</td>
+                                                <td>1960</td>
+                                                <td>4.15</td>
+                                              </tr>
+                                              <tr>
+                                                <td>Childhood's End</td>
+                                                <td>Arthur C. Clarke</td>
+                                                <td>1954</td>
+                                                <td>4.12</td>
+                                              </tr>
+                                              <tr>
+                                                <td>The Mote in God's Eye</td>
+                                                <td>Jerry Pournelle, Larry Niven</td>
+                                                <td>1975</td>
+                                                <td>4.07</td>
+                                              </tr>
+                                              <tr>
+                                                <td>Protector</td>
+                                                <td>Larry Niven</td>
+                                                <td>1974</td>
+                                                <td>4.06</td>
+                                              </tr>
+                                              <tr>
+                                                <td>Grass</td>
+                                                <td>Sheri S. Tepper</td>
+                                                <td>1990</td>
+                                                <td>4.03</td>
+                                              </tr>
+                                            </tbody></table>    
+
+                                        <button onclick="openSqlCodeWindow('#section6')" style="font-size: 16px; margin: auto;">SQL Code Hier</button> 
+                                    </div>
+                                </div>
+                            </ul>
+                        </article>
+
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<section>
+							<form method="post" action="#">
+								<div class="fields">
+									<div class="field">
+										<label for="name">Name</label>
+										<input type="text" name="name" id="name" />
+									</div>
+									<div class="field">
+										<label for="email">Email</label>
+										<input type="text" name="email" id="email" />
+									</div>
+									<div class="field">
+										<label for="message">Message</label>
+										<textarea name="message" id="message" rows="3"></textarea>
+									</div>
+								</div>
+								<ul class="actions">
+									<li><input type="submit" value="Send Message" /></li>
+								</ul>
+							</form>
+						</section>
+						<section class="split contact">
+							<section>
+								<h3>Email</h3>
+								<p><a href="#">jonvin35@gmail.com</a></p>
+							</section>
+						</section>
+					</footer>
+
+				<!-- Copyright -->
+					<div id="copyright">
+						<ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+            <script>
+                function openSqlCodeWindow(anchor) {
+                    // Open a new tab and navigate to the specified anchor link
+                    var sqlWindow = window.open('hugo_sql.html' + anchor, '_blank');
+                }
+            </script>
+            <style>
+                .collapsible-section {
+                    text-align: left;
+                }
+            
+                .collapsible-button {
+                    background-color: #555; /* Lighter gray */
+                    color: #fff; /* White text */
+                    padding: 10px;
+                    border: none;
+                    cursor: pointer;
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    text-align: left;
+                    transition: background-color 0.3s, color 0.3s; /* Add animation for background color and text color */
+                }
+            
+                .collapsible-text {
+                    flex: 1;
+                    color: #fff;
+                    margin-right: 10px; /* Add some space between text and icon */
+                }
+            
+                .collapsible-icon {
+                    font-size: 18px; /* Adjust the size as needed */
+                    color: #fff;
+                }
+            
+                .collapsible-content {
+                    max-height: 0;
+                    overflow: hidden;
+                    transition: max-height 0.3s ease-in-out; /* Add animation for max-height */
+                    padding: 10px;
+                    background-color: #ddd; /* Light gray */
+                }
+            
+                .collapsible-content p {
+                    margin: 0;
+                }
+            
+                .collapsible-section.active .collapsible-content {
+                    max-height: 200px; /* Adjust the max-height as needed */
+                }
+            </style>
+            
+            <!-- JavaScript for collapsible functionality -->
+            <script>
+                var coll = document.getElementsByClassName("collapsible-button");
+                var i;
+            
+                for (i = 0; i < coll.length; i++) {
+                    coll[i].addEventListener("click", function () {
+                        this.classList.toggle("active");
+                        var content = this.nextElementSibling;
+                        var icon = this.querySelector('.collapsible-icon');
+            
+                        if (content.style.maxHeight) {
+                            content.style.maxHeight = null;
+                            icon.innerHTML = "+";
+                        } else {
+                            content.style.maxHeight = content.scrollHeight + "px";
+                            icon.innerHTML = "-";
+                        }
+                    });
+                }
+            </script>
+
+	</body>
+</html>
+

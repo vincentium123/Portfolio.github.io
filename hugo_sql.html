@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Code Page</title>
+</head>
+<body>
+
+    <h1>SQL Code Page</h1>
+
+    <pre id="section1" style="font-size: 16px; font-weight: bold;">SQL code for Question 1</pre>
+
+<pre>
+
+    /* Winners vs. Nominees Ratings*/
+
+    WITH win_ratings AS (
+      SELECT
+        avg(average_rating) AS winner_ratings
+      FROM
+        public."Hugos"
+      WHERE
+        winner IS true
+    ),
+    nominee_ratings AS (
+      SELECT
+        avg(average_rating) AS nom_ratings
+      FROM
+        public."Hugos"
+      WHERE
+        winner IS false
+    )
+    SELECT
+      win_ratings,
+      nom_ratings,
+      winner_ratings - nom_ratings AS difference
+    FROM
+      win_ratings, nominee_ratings;
+
+
+    /* Winners vs. Nominees Popularity*/
+
+    WITH win_ratings AS (
+      SELECT
+        avg("ratingsCount") AS winner_ratings
+      FROM
+        public."Hugos"
+      WHERE
+        winner IS true
+    ),
+    nominee_ratings AS (
+      SELECT
+        avg("ratingsCount") AS nom_ratings
+      FROM
+        public."Hugos"
+      WHERE
+        winner IS false
+    )
+    SELECT
+      win_ratings,
+      nom_ratings,
+      winner_ratings - nom_ratings AS difference
+    FROM
+      win_ratings, nominee_ratings;
+
+    /* Winners vs. Nominees Popularity w/o Outliers */
+
+WITH win_ratings AS (
+  SELECT
+    avg("ratingsCount") AS winner_ratings
+  FROM
+    public."Hugos"
+  WHERE
+    winner IS true AND "ratingsCount" < 500000
+),
+nominee_ratings AS (
+  SELECT
+    avg("ratingsCount") AS nom_ratings
+  FROM
+    public."Hugos"
+  WHERE
+    winner IS false AND "ratingsCount" < 500000
+)
+SELECT
+  win_ratings,
+  nom_ratings,
+  winner_ratings - nom_ratings AS difference
+FROM
+  win_ratings, nominee_ratings;
+</pre>
+
+
+    <pre id="section2" style="font-size: 16px; font-weight: bold;">SQL code for Question 2</pre>
+<pre>
+    /* Best Books */
+
+    SELECT title, author, hugo_year, average_rating, "ratingsCount", winner
+    FROM public."Hugos"
+    ORDER BY average_rating DESC
+    LIMIT 10;
+
+    /* Best Winners */
+
+    SELECT title, author, hugo_year, average_rating, "ratingsCount", winner
+    FROM public."Hugos"
+    WHERE winner = true
+    ORDER BY average_rating DESC
+    LIMIT 10;
+
+    /*Ratings By Decade- Winners */
+
+    WITH decs AS(
+    SELECT hugo_year,
+    average_rating, winner, 
+    (EXTRACT(DECADE FROM to_timestamp(hugo_year::text, 'YYYY')) * 10)::int AS decade
+    FROM public."Hugos")
+    
+    SELECT decade, ROUND(AVG(CAST(average_rating AS numeric)), 3)
+    FROM decs
+    WHERE winner = true
+    GROUP BY decade
+    ORDER BY decade ASC;
+
+    /*Ratings By Decade*/
+
+    WITH decs AS(
+    SELECT hugo_year,
+    average_rating, winner, 
+    (EXTRACT(DECADE FROM to_timestamp(hugo_year::text, 'YYYY')) * 10)::int AS decade
+    FROM public."Hugos")
+    
+    SELECT decade, ROUND(AVG(CAST(average_rating AS numeric)), 3)
+    FROM decs
+    GROUP BY decade
+    ORDER BY decade ASC;
+
+    /* Worst Books */
+
+    SELECT title, average_rating, "ratingsCount"
+    FROM public."Hugos"
+    ORDER BY average_rating ASC
+    LIMIT 10;
+
+    /* Worst Winners */
+
+    SELECT title, average_rating, "ratingsCount"
+    FROM public."Hugos"
+    WHERE winner = true
+    ORDER BY average_rating ASC
+    LIMIT 10;
+</pre>
+    <pre id="section3" style="font-size: 16px; font-weight: bold;">SQL code for Question 3</pre>
+<pre>
+    /* Best Years */
+
+    SELECT hugo_year, avg(average_rating) AS year_avg
+    FROM public."Hugos"
+    GROUP BY hugo_year
+    ORDER BY avg(average_rating) DESC
+    LIMIT 5;
+
+    /* Worst Years */
+
+    SELECT hugo_year, avg("ratingsCount") AS year_avg
+    FROM public."Hugos"
+    GROUP BY hugo_year
+    ORDER BY avg("ratingsCount") DESC
+    LIMIT 5;
+</pre>
+    <pre id="section4" style="font-size: 16px; font-weight: bold;">SQL code for Question 4</pre>
+<pre>
+    /* Least Popular Books */
+
+    SELECT title, hugo_year, "ratingsCount"
+    FROM public."Hugos"
+    ORDER BY "ratingsCount" ASC
+    LIMIT 10;
+
+    /* Least Popular Winners */
+
+    SELECT title, hugo_year, "ratingsCount"
+    FROM public."Hugos"
+    WHERE winner = true
+    ORDER BY "ratingsCount" ASC
+    LIMIT 10;
+</pre>
+    <pre id="section5" style="font-size: 16px; font-weight: bold;">SQL code for Question 5</pre>
+
+    <pre>
+    /* Most Popular Year */
+
+    SELECT hugo_year, avg("ratingsCount") AS year_avg
+    FROM public."Hugos"
+    GROUP BY hugo_year
+    ORDER BY avg("ratingsCount") DESC
+    LIMIT 5;
+
+    /* LEAST Popular Year */
+
+    SELECT hugo_year, avg("ratingsCount") AS year_avg
+    FROM public."Hugos"
+    GROUP BY hugo_year
+    ORDER BY avg("ratingsCount") ASC
+    LIMIT 5;
+
+    /* Most Popular Year w/o outliers */
+
+    SELECT hugo_year, avg("ratingsCount") AS year_avg
+    FROM public."Hugos"
+    WHERE "ratingsCount" < 500000
+    GROUP BY hugo_year
+    ORDER BY avg("ratingsCount") DESC
+    LIMIT 5;
+
+    /* Least Popular Year w/o outliers */
+
+    SELECT hugo_year, avg("ratingsCount") AS year_avg
+    FROM public."Hugos"
+    WHERE "ratingsCount" < 500000
+    GROUP BY hugo_year
+    ORDER BY avg("ratingsCount") DESC
+    LIMIT 5;
+
+    </pre>
+
+    <pre id="section6" style="font-size: 16px; font-weight: bold;">SQL code for Question 6</pre>
+
+    <pre>
+        /* Percentage of Years where Highest-Rated Nominee Won */
+        WITH rankings AS (
+            SELECT
+                hugo_year,
+                average_rating,
+                winner,
+                RANK() OVER (PARTITION BY hugo_year ORDER BY average_rating DESC) AS rating_rank,
+                COUNT(*) OVER (PARTITION BY hugo_year) AS row_count
+            FROM
+                public."Hugos"
+        )
+        
+        SELECT AVG(CASE WHEN winner = TRUE THEN 1 ELSE 0 END) AS av_winners
+        FROM rankings
+        WHERE rating_rank = 1
+            AND row_count > 1; 
+    </pre>
+
+    <pre id="rec1" style="font-size: 16px; font-weight: bold;">SQL code for Hidden Gems</pre>
+
+    <pre>
+        /* Hidden Gems */
+
+        SELECT title, author, hugo_year, "ratingsCount", average_rating
+        FROM public."Hugos"
+        WHERE (title, author, hugo_year, "ratingsCount", average_rating) IN (
+          SELECT title, author, hugo_year, "ratingsCount", average_rating
+          FROM public."Hugos"
+          ORDER BY average_rating ASC
+          OFFSET (SELECT COUNT(*) * 0.75 FROM public."Hugos") ROWS
+        )
+        AND (title, author, hugo_year, "ratingsCount", average_rating) IN (
+          SELECT title, author, hugo_year, "ratingsCount", average_rating
+          FROM public."Hugos"
+          ORDER BY "ratingsCount" DESC
+          OFFSET (SELECT COUNT(*) * 0.75 FROM public."Hugos") ROWS
+        );
+        
+        
+    </pre>    <pre id="rec2" style="font-size: 16px; font-weight: bold;">SQL code for Classic Non-Winners</pre>
+
+    <pre>
+        /* Classic Non-Winners */
+
+
+        SELECT title, author, hugo_year, average_rating
+        FROM public."Hugos"
+        WHERE "Classics" = true and hugo_year <2000 AND winner = false
+        ORDER BY average_rating DESC; 
+    </pre>
+</body>
+</html>
