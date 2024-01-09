@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Code Page</title>
+</head>
+<body>
+
+    <h1>SQL Code Page</h1>
+
+    <pre id="section1" style="font-size: 16px; font-weight: bold;">SQL code for Question 1</pre>
+
+<pre>
+    /* Average Readership- All Books */
+
+    SELECT AVG("ratingsCount")
+    FROM public."Bookers";
+
+    /* Average Readership- All Books */
+
+    SELECT AVG("ratingsCount")
+    FROM public."Bookers"
+    WHERE longlist = true;
+
+    /* Average Readership- Shortlist */
+
+    SELECT AVG("ratingsCount")
+    FROM public."Bookers"
+    WHERE shortlist = true AND winner = false;
+
+    /* Average Readership- Winners */
+
+    SELECT AVG("ratingsCount")
+    FROM public."Bookers"
+    WHERE shortlist = true AND winner = true;
+
+    /* Most Popular Books */
+
+    SELECT title, author, "ratingsCount"
+    FROM public."Bookers"
+    ORDER BY "ratingsCount" DESC
+    LIMIT 10;
+
+    /* Bottom 10 Books-Popularity */
+
+    SELECT SUM("ratingsCount")
+    FROM (
+        SELECT "ratingsCount"
+        FROM public."Bookers"
+        ORDER BY "ratingsCount" ASC
+        LIMIT 10
+    ) AS bottom_10_rows;
+
+    /* Median Readership-Winners */
+
+    SELECT   percentile_disc(0.5) WITHIN GROUP (ORDER BY "ratingsCount") AS median
+    FROM public."Bookers"
+    WHERE shortlist = true AND winner = true;
+</pre>
+
+
+    <pre id="section2" style="font-size: 16px; font-weight: bold;">SQL code for Question 2</pre>
+<pre>
+    /* All Books Rating */
+
+    SELECT AVG(average_rating)
+    FROM public."Bookers";
+    
+    /* Longlist Rating */
+
+    SELECT AVG(average_rating)
+    FROM public."Bookers"
+    WHERE longlist= true;
+
+    /* Shortlist Rating */
+
+    SELECT AVG(average_rating)
+    FROM public."Bookers"
+    WHERE shortlist= true AND winner=false;
+
+    /* Shortlist Rating */
+
+    SELECT AVG(average_rating)
+    FROM public."Bookers"
+    WHERE winner=true;
+</pre>
+
+    <pre id="section3" style="font-size: 16px; font-weight: bold;">SQL code for Question 3</pre>
+<pre>
+   
+    /* Percentage of Years where Highest-Rated Nominee Won */
+    WITH rankings AS (
+        SELECT
+            booker_year,
+            average_rating,
+            winner,
+            RANK() OVER (PARTITION BY booker_year ORDER BY average_rating DESC) AS rating_rank,
+            COUNT(*) OVER (PARTITION BY booker_year) AS row_count
+        FROM
+            public."Bookers"
+    )
+    
+    SELECT AVG(CASE WHEN winner = TRUE THEN 1 ELSE 0 END) AS av_winners
+    FROM rankings
+    WHERE rating_rank = 1
+        AND row_count > 1; 
+
+
+        /* Percentage of Years where Highest-Rated on Shortlist Won */
+        WITH rankings AS (
+            SELECT
+                booker_year,
+                average_rating,
+                winner,
+                RANK() OVER (PARTITION BY booker_year ORDER BY average_rating DESC) AS rating_rank,
+                COUNT(*) OVER (PARTITION BY booker_year) AS row_count
+            FROM
+                public."Bookers"
+            WHERE shortlist = true OR winner = true
+        )
+        
+        SELECT AVG(CASE WHEN winner = TRUE THEN 1 ELSE 0 END) AS av_winners
+        FROM rankings
+        WHERE rating_rank = 1
+            AND row_count > 1; 
+
+
+            /* Percentage of Years where Most Popular on Shortlist Won */
+    WITH rankings AS (
+        SELECT
+            booker_year,
+            average_rating,
+            winner,
+            RANK() OVER (PARTITION BY booker_year ORDER BY "ratingsCount" DESC) AS rating_rank,
+            COUNT(*) OVER (PARTITION BY booker_year) AS row_count
+        FROM
+            public."Bookers"
+		WHERE shortlist = true OR winner = true
+    )
+    
+    SELECT AVG(CASE WHEN winner = TRUE THEN 1 ELSE 0 END) AS av_winners
+    FROM rankings
+    WHERE rating_rank = 1
+        AND row_count > 1; 
+
+        /* Percentage of Years where Most Popular Won */
+        WITH rankings AS (
+            SELECT
+                booker_year,
+                average_rating,
+                winner,
+                RANK() OVER (PARTITION BY booker_year ORDER BY "ratingsCount" DESC) AS rating_rank,
+                COUNT(*) OVER (PARTITION BY booker_year) AS row_count
+            FROM
+                public."Bookers"
+        )
+        
+        SELECT AVG(CASE WHEN winner = TRUE THEN 1 ELSE 0 END) AS av_winners
+        FROM rankings
+        WHERE rating_rank = 1
+            AND row_count > 1; 
+        
+</pre>
+    <pre id="section4" style="font-size: 16px; font-weight: bold;">SQL code for Question 4</pre>
+<pre>
+    /* Best Winners */
+
+    SELECT title, author, average_rating, "ratingsCount", winner
+    FROM public."Bookers"
+    WHERE winner = true
+    ORDER BY average_rating DESC
+    LIMIT 10;
+
+    /* Best All Books */
+
+    SELECT title, author, average_rating, "ratingsCount", winner
+    FROM public."Bookers"
+    ORDER BY average_rating DESC
+    LIMIT 10;
+
+    /* Best Non-Winners */
+
+    SELECT title, author, average_rating, "ratingsCount", winner
+    FROM public."Bookers"
+    WHERE winner = false
+    ORDER BY average_rating DESC
+    LIMIT 10;
+</pre>
+
+    <pre id="section5" style="font-size: 16px; font-weight: bold;">SQL code for Question 5</pre>
+
+    <pre>
+    
+        /* Best Years */
+
+        SELECT booker_year, avg(average_rating) AS year_avg
+        FROM public."Bookers"
+        GROUP BY booker_year
+        ORDER BY avg(average_rating) DESC
+        LIMIT 5;
+
+
+        /* Worst Years */
+
+        SELECT booker_year, avg(average_rating) AS year_avg
+        FROM public."Bookers"
+        GROUP BY booker_year
+        ORDER BY avg(average_rating) ASC
+        LIMIT 5;
+
+
+
+    </pre>
+
+    <pre id="section6" style="font-size: 16px; font-weight: bold;">SQL code for Question 6</pre>
+
+    <pre>
+        /* Worst Books */
+
+        SELECT title, author, average_rating, "ratingsCount", winner, shortlist, longlist
+        FROM public."Bookers"
+        ORDER BY average_rating ASC
+        LIMIT 10;
+    </pre>   
+
+    <pre id="rec1" style="font-size: 16px; font-weight: bold;">SQL code for Hidden Gems</pre>
+
+    <pre>
+        
+        /* Hidden Gems */
+
+        SELECT title, author, booker_year, "ratingsCount", average_rating
+        FROM public."Bookers"
+        WHERE (title, author, booker_year, "ratingsCount", average_rating) IN (
+          SELECT title, author, booker_year, "ratingsCount", average_rating
+          FROM public."Bookers"
+          ORDER BY average_rating ASC
+          OFFSET (SELECT COUNT(*) * 0.75 FROM public."Bookers") ROWS
+        )
+        AND (title, author, booker_year, "ratingsCount", average_rating) IN (
+          SELECT title, author, booker_year, "ratingsCount", average_rating
+          FROM public."Bookers"
+          ORDER BY "ratingsCount" DESC
+          OFFSET (SELECT COUNT(*) * 0.75 FROM public."Bookers") ROWS
+        );
+
+        
+    </pre>    
+
+</body>
+</html>

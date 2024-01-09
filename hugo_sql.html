@@ -165,7 +165,7 @@ FROM
     SELECT hugo_year, avg("ratingsCount") AS year_avg
     FROM public."Hugos"
     GROUP BY hugo_year
-    ORDER BY avg("ratingsCount") DESC
+    ORDER BY avg("ratingsCount") ASC
     LIMIT 5;
 </pre>
     <pre id="section4" style="font-size: 16px; font-weight: bold;">SQL code for Question 4</pre>
@@ -250,20 +250,21 @@ FROM
     <pre>
         /* Hidden Gems */
 
-        SELECT title, author, hugo_year, "ratingsCount", average_rating
-        FROM public."Hugos"
-        WHERE (title, author, hugo_year, "ratingsCount", average_rating) IN (
-          SELECT title, author, hugo_year, "ratingsCount", average_rating
-          FROM public."Hugos"
+        SELECT title, author, booker_year, "ratingsCount", average_rating
+        FROM public."Bookers"
+        WHERE (title, author, booker_year, "ratingsCount", average_rating) IN (
+          SELECT title, author, booker_year, "ratingsCount", average_rating
+          FROM public."Bookers"
           ORDER BY average_rating ASC
-          OFFSET (SELECT COUNT(*) * 0.75 FROM public."Hugos") ROWS
+          OFFSET (SELECT COUNT(*) * 0.75 FROM public."Bookers") ROWS
         )
-        AND (title, author, hugo_year, "ratingsCount", average_rating) IN (
-          SELECT title, author, hugo_year, "ratingsCount", average_rating
-          FROM public."Hugos"
+        AND (title, author, booker_year, "ratingsCount", average_rating) IN (
+          SELECT title, author, booker_year, "ratingsCount", average_rating
+          FROM public."Bookers"
           ORDER BY "ratingsCount" DESC
-          OFFSET (SELECT COUNT(*) * 0.75 FROM public."Hugos") ROWS
+          OFFSET (SELECT COUNT(*) * 0.75 FROM public."Bookers") ROWS
         );
+
         
         
     </pre>    <pre id="rec2" style="font-size: 16px; font-weight: bold;">SQL code for Classic Non-Winners</pre>

@@ -77,7 +77,7 @@
                             <header class="major">
                                 <h2>The Hugo Awards</h2>
                                 <p>Hello and welcome to my analysis of the Hugo Awards! The Hugos are usually considered the top prize in Science Fiction, with many classics of the genre among the winners and nominees. Every year, participants at WorldCon, the world’s largest convention for print science fiction, nominate the books they consider to be the best novels of the year. After that, the five most-nominated novels are put into a final round of voting, where one is selected to win the Hugo Award. That means that every year sees four nominees and one winner (except for the handful of years where two novels tied for first).</p>
-                                <p>I was interested in answering a few questions about them, so I turned to Goodreads, the world’s largest book-focused social media platform. I assembled a list of all Hugo Award winners and nominees starting in 1951 and extending up to the present day- nearly 400 novels in all. I then used Havan Agrawal’s excelled <a href="https://github.com/havanagrawal/GoodreadsScraper">GoodreadsScraper</a> tool to scrape data and did a bit of data cleaning using R. Once I had a clean dataset, I conducted analysis using PostgreSQL in pgAdmin 4.</p>
+                                <p>I was interested in answering a few questions about them, so I turned to Goodreads, the world’s largest book-focused social media platform. I assembled a list of all Hugo Award winners and nominees starting in 1951 and extending up to the present day- nearly 400 novels in all. I then used Havan Agrawal’s excellent <a href="https://github.com/havanagrawal/GoodreadsScraper">GoodreadsScraper</a> tool to scrape data and did a bit of data cleaning using R. Once I had a clean dataset, I conducted analysis using PostgreSQL in pgAdmin 4.</p>
                                 <p>The overarching question I had in mind for this analysis is pretty simple: how do the winners of the Hugo Awards compare to the nominees? There’s lots of different ways to answer that, so I’ve divided the question in multiple ways.</p>
                             
                                 <p>In order not to have giant blocks of code interspersed with the text, I’ve put links to the SQL code I wrote for each section at the bottom of each section. I’ve also made the full dataset publicly available <a href="https://github.com/vincentium123/Awards">here</a> if you’re interested in it.</p>
@@ -772,7 +772,7 @@
                                     </div>
                                 </div>
 
-                                <p>Below I used the Goodreads to find a few recommendations.</p>
+                                <p>Below I used the Goodreads data to find a few book recommendations.</p>
                                 <div class="collapsible-section">
                                     <button class="collapsible-button">
                                         <span class="collapsible-text">Hidden Gems</span>
@@ -893,7 +893,7 @@
                                               </tr>
                                             </tbody></table>    
 
-                                        <button onclick="openSqlCodeWindow('#section6')" style="font-size: 16px; margin: auto;">SQL Code Here</button> 
+                                        <button onclick="openSqlCodeWindow('#rec2')" style="font-size: 16px; margin: auto;">SQL Code Here</button> 
                                     </div>
                                 </div>
                             </ul>
