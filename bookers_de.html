@@ -75,49 +75,49 @@
 
 						<article class="post featured">
                             <header class="major">
-                                <h2>The Booker Prize</h2>
-                                <p>Hello and welcome to my analysis of the Booker Prize! The Booker Prize is widely considered one of the top Englisg-language literary prizes in the world. Every years, around a dozen novels are selected by an eminient panel of writers, critics, and cultural figures as contendors for the prize. These dozen books (the longlist) are then reduced to six (the shortlist) before a winner is selected. The winning author is awarded a cash prize of 50,000 GBP. Originally reserved only for novels published by authors from the British Commonwealth, Ireland, or South Africa, it has since expanded to include all books originally published in English, regardless of the nationality of the author.</p>
-                                <p>I was interested in answering a few questions about the Booker Prize, so I turned to Goodreads, the world’s largest book-focused social media platform. I assembled a list of all Booker Prize winners and nominees starting in 2001 and extending up to the present day- 345 novels in all. I then used Havan Agrawal’s excellent <a href="https://github.com/havanagrawal/GoodreadsScraper">GoodreadsScraper</a> tool to scrape data and did a bit of data cleaning using R. Once I had a clean dataset, I conducted analysis using PostgreSQL in pgAdmin 4.</p>
-                                <p>The goal of this analysis was to look at two features of the novels nominated for the Booker Prize: their popularity and their quality. I wanted to know, among other things, if winners are rated more highly than nominees, what the most popular nominated novels are, and if, in contrast to stereotype, anyone actually reads most of the books on the longlist.</p>
+                                <h2>Der Booker-Preis</h2>
+                                <p>Hallo und herzlich willkommen zu meiner Analyse des Booker Prize! Der Booker Prize gilt weithin als einer der wichtigsten englischsprachigen Literaturpreise der Welt. Jedes Jahr wählt eine hochkarätige Jury aus Schriftstellern, Kritikern und Kulturschaffenden rund ein Dutzend Romane aus, die sich um den Preis bewerben. Dieses Dutzend Bücher (die Longlist) wird dann auf sechs reduziert (die Shortlist), bevor ein Gewinner ausgewählt wird. Der Gewinner erhält ein Preisgeld von 50 000 GBP. Ursprünglich war der Preis nur Romanen vorbehalten, die von Autoren aus dem Britischen Commonwealth, Irland oder Südafrika veröffentlicht wurden. Inzwischen wurde der Preis auf alle Bücher ausgeweitet, die ursprünglich in englischer Sprache veröffentlicht wurden, unabhängig von der Nationalität des Autors.</p>
+                                <p>Ich wollte ein paar Fragen zum Booker Prize beantworten und habe mich deshalb an Goodreads gewandt, die weltweit größte Social-Media-Plattform rund um das Thema Buch. Ich habe eine Liste aller Gewinner und Nominierten des Booker Prize zusammengestellt, die mit dem Jahr 2001 beginnt und bis zum heutigen Tag reicht - insgesamt 345 Romane. Dann benutzte ich das ausgezeichnete <a href="https://github.com/havanagrawal/GoodreadsScraper">GoodreadsScraper</a> Tool von Havan Agrawal, um die Daten zu scrapen, und führte eine kleine Datenbereinigung mit R durch. Sobald ich einen sauberen Datensatz hatte, führte ich die Analyse mit PostgreSQL in pgAdmin 4 durch.</p>
+                                <p>Das Ziel dieser Analyse war es, zwei Merkmale der für den Booker Prize nominierten Romane zu untersuchen: ihre Popularität und ihre Qualität. Ich wollte unter anderem wissen, ob die Gewinner höher bewertet werden als die Nominierten, welches die beliebtesten nominierten Romane sind und ob entgegen dem Klischee tatsächlich jemand die meisten Bücher auf der Longlist liest.</p>
                             
-                                <p>In order not to have giant blocks of code interspersed with the text, I’ve put links to the SQL code I wrote for each section at the bottom of each section. I’ve also made the full dataset publicly available <a href="https://github.com/vincentium123/Awards">here</a> if you’re interested in it.</p>
+                                <p>Damit der Text nicht mit riesigen Codeblöcken durchsetzt ist, habe ich Links zum SQL-Code, den ich für jeden Abschnitt geschrieben habe, an den Fuß jedes Abschnitts gesetzt. Außerdem habe ich den gesamten Datensatz <a href="https://github.com/vincentium123/Awards">hier</a> öffentlich zugänglich gemacht.</p>
                             
                                 <p>Let’s get started.</p>
                                 <div class="collapsible-section">
                                     <button class="collapsible-button">
-                                        <span class="collapsible-text">1. Does anyone actually read Booker nominees?</span>
+                                        <span class="collapsible-text">1. Liest eigentlich jemand die Booker-Nominierungen?</span>
                                         <span class="collapsible-icon">+</span>
                                     </button>
                                     <div class="collapsible-content">
                                         <!-- Your collapsible section content goes here -->
                                         <p style="margin-bottom: 10px;
-                                        text-indent: 20px;">In 1981, John Banville, an Irish author who was nominated for the Booker, requested that he win the prize so that he could use the money to buy copies of all the novels on the longlist and send them to libraries, "thus ensuring that the books not only are bought but also read – surely a unique occurrence." There is a cliche that many of the books nominated for the Bookers are simply unpopular- out of line with public taste, overly literary and dull, and simply not bestseller material. I wanted to formally test that. I'm using if someone left a review as a proxy for if the book was read- although many people might leave a (negative) review if they stopped reading the book part-way through, most raters presumably read at least the majority of the novel.</p>
+                                        text-indent: 20px;">John Banville, ein irischer Autor, der für den Booker nominiert war, bat 1981 darum, den Preis zu gewinnen, damit er mit dem Geld Exemplare aller Romane auf der Longlist kaufen und an Bibliotheken schicken könne, "um so sicherzustellen, dass die Bücher nicht nur gekauft, sondern auch gelesen werden - sicherlich ein einmaliges Ereignis." Es gibt das Klischee, dass viele der für die Bookers nominierten Bücher einfach unpopulär sind - nicht dem Publikumsgeschmack entsprechend, zu literarisch und langweilig und einfach nicht bestsellerfähig. Das wollte ich formal testen. Ich verwende die Frage, ob jemand eine Bewertung abgegeben hat, als Indikator dafür, ob das Buch gelesen wurde - obwohl viele Leute eine (negative) Bewertung abgeben könnten, wenn sie das Buch auf halbem Wege abbrechen, haben die meisten Bewerter vermutlich zumindest den Großteil des Romans gelesen.</p>
                                         <table style="width: 50%; margin: auto;">
                                             <thead>
                                             <tr>
-                                                <th>Category</th>
-                                                <th>Mean # of Ratings</th>
-                                                <th>Median # of Ratings</th>
+                                                <th>Kategorie</th>
+                                                <th>Mean # von Ratings</th>
+                                                <th>Median # von Ratings</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td>All Books</td>
+                                                <td>Alle Bücher</td>
                                                 <td>49426</td>
                                                 <td>7512</td>
                                             </tr>
                                             <tr>
-                                                <td>Longlist only</td>
+                                                <td>Nur Longlist</td>
                                                 <td>35563</td>
                                                 <td>3217</td>
                                             </tr>
                                             <tr>
-                                                <td>Shortlist only</td>
+                                                <td>Nur Shortlist</td>
                                                 <td>52263</td>
                                                 <td>14152</td>
                                             </tr>
                                             <tr>
-                                                <td>Winners</td>
+                                                <td>Gewinner</td>
                                                 <td>154818</td>
                                                 <td>56329</td>
                                             </tr>
@@ -125,21 +125,21 @@
                                         </table>
   
                                         <p style="margin-bottom: 10px;
-                                        text-indent: 20px;">The mean and the median tell very different stories here. We’d expect that there would be some books with extremely high numbers of ratings which would push the mean higher, while books with extremely low averages would have less effect. After all, there could be a book with potentially billions of reviews, while would result in an average in the millions, even if no one at all had read any of the other books. A smaller version of that seems to be what has happened. The mean Booker Prize nominated novel has nearly 50,000 ratings, while the median has only 7,500. The results are even starker if we just look at the novels on the longlist. The median novel there has only 3200 ratings, meaning that half of books have fewer. It seems that many Booker Prize longlisted novels are simply not widely read. 
+                                        text-indent: 20px;">Der Mittelwert und der Median erzählen hier sehr unterschiedliche Geschichten. Wir würden erwarten, dass es einige Bücher mit extrem vielen Bewertungen gibt, die den Mittelwert in die Höhe treiben würden, während Bücher mit extrem niedrigen Durchschnittswerten weniger Auswirkungen hätten. Schließlich könnte es ein Buch mit potenziell Milliarden von Bewertungen geben, das zu einem Mittelwert in Millionenhöhe führen würde, selbst wenn niemand eines der anderen Bücher gelesen hätte. Eine kleinere Version davon scheint es zu sein, was geschehen ist. Der durchschnittliche Roman, der für den Booker Prize nominiert wurde, hat fast 50 000 Bewertungen, während der Median nur 7 500 beträgt. Die Ergebnisse sind noch deutlicher, wenn wir nur die Romane auf der Longlist betrachten. Der Median liegt hier bei nur 3200 Bewertungen, was bedeutet, dass die Hälfte der Bücher weniger Bewertungen hat. Es scheint, dass viele Romane, die auf der Longlist des Booker Prize stehen, einfach nicht viel gelesen werden. 
  </p>
                                         <table style="width: 50%; margin: auto;">
                                             <tr>
-                                                <th>Category</th>
-                                                <th>Cumulative # of Ratings</th>
-                                                <th>Per Book</th>
+                                                <th>Kategorie</th>
+                                                <th>Kumulative Anzahl von Bewertungen</th>
+                                                <th>Pro Buch</th>
                                             </tr>
                                             <tr>
-                                                <td>All</td>
+                                                <td>Alle</td>
                                                 <td>17,051,838</td>
                                                 <td>49,426</td>
                                             </tr>
                                             <tr>
-                                                <td>Top 10 Books</td>
+                                                <td>Top 10 Bücher</td>
                                                 <td>8,139,350</td>
                                                 <td>813,935</td>
                                             </tr>
@@ -154,35 +154,35 @@
                                                 <td>274,364</td>
                                             </tr>
                                             <tr>
-                                                <td>Bottom 10</td>
+                                                <td>Unterste 10</td>
                                                 <td>302</td>
                                                 <td>30</td>
                                             </tr>
                                             <tr>
-                                                <td>Bottom 20</td>
+                                                <td>Unterste 20</td>
                                                 <td>1,196</td>
                                                 <td>60</td>
                                             </tr>
                                             <tr>
-                                                <td>Bottom 50</td>
+                                                <td>Unterste 50</td>
                                                 <td>12,021</td>
                                                 <td>240</td>
                                             </tr>
                                         </table>
                                         <p style="margin-bottom: 10px;
-                                        text-indent: 20px;">This is shown even more starkly if we look at the distribution of ratings. Overall, the 350 Booker Prize novels have received just over 17 million ratings. However, roughly half of those have gone to the top ten most popular books. If we expand to look at the top twenty, we find 62% of the ratings; the top 50, 81%. In other words, 15% of the books have 80% of the ratings. 
+                                        text-indent: 20px;">Dies wird noch deutlicher, wenn man sich die Verteilung der Bewertungen ansieht. Insgesamt haben die 350 Booker Prize-Romane etwas mehr als 17 Millionen Bewertungen erhalten. Etwa die Hälfte davon entfiel jedoch auf die zehn beliebtesten Bücher. Betrachtet man die zwanzig beliebtesten Bücher, so entfallen 62 % der Bewertungen auf sie, bei den 50 beliebtesten Büchern sind es 81 %. Mit anderen Worten: 15 % der Bücher haben 80 % der Bewertungen.
 </p>
                                     
                                         <p style="margin-bottom: 10px;
-                                        text-indent: 20px;">We can see the opposite end of the scale by looking at the least popular novels. The bottom ten novels have only an average of 30 reviews each, the bottom 50, 240. Simply put, many Booker Prize nominees are not widely read. Several of them seem to be downright obscure. 
+                                        text-indent: 20px;">Das andere Ende der Skala zeigt sich bei den unbeliebtesten Romanen. Die zehn am schlechtesten bewerteten Romane haben im Durchschnitt jeweils nur 30 Bewertungen, die 50 am schlechtesten bewerteten 240. Viele der für den Booker Prize nominierten Romane werden einfach nicht viel gelesen. Einige von ihnen scheinen geradezu obskur zu sein. 
 </p>                                        <p style="margin-bottom: 10px;
-                                        text-indent: 20px;">That raises the question: what are these popular novels that dominate the popularity contest? Looking at the list, several (Life of Pi, Room, Atonement) have been made into films. Others are classics of young adult literature (The Amber Spyglass, The Curious Incident of the Dog in the Night-Time). Still others are from some of the most popular contemporary fiction authors like Kazuo Ishiguro and Sally Rooney. 
+                                        text-indent: 20px;">Das wirft die Frage auf: Was sind das für populäre Romane, die den Beliebtheitswettbewerb dominieren? Ein Blick auf die Liste zeigt, dass einige (Life of Pi, Room, Atonement) bereits verfilmt wurden. Andere sind Klassiker der Jugendliteratur (The Amber Spyglass, The Curious Incident of the Dog in the Night-Time). Wieder andere stammen von einigen der beliebtesten zeitgenössischen Autoren wie Kazuo Ishiguro und Sally Rooney.
 </p>
                                         <table style="margin:auto; width: 80%; margin-bottom: 20px;">
                                             <tr>
-                                                <th>Title</th>
-                                                <th>Author</th>
-                                                <th># of Ratings</th>
+                                                <th>Buch</th>
+                                                <th>Autor</th>
+                                                <th># von Ratings</th>
                                             </tr>
                                             <tr>
                                                 <td>Life of Pi</td>
@@ -236,7 +236,7 @@
                                             </tr>
                                         </table>
 
-                                        <button onclick="openSqlCodeWindow('#section1')" style="font-size: 16px; margin: auto;">SQL Code Here</button>
+                                        <button onclick="openSqlCodeWindow('#section1')" style="font-size: 16px; margin: auto;">SQL Code Hier</button>
 
 
 
@@ -244,21 +244,21 @@
                                 </div>
                                 <div class="collapsible-section">
                                     <button class="collapsible-button">
-                                        <span class="collapsible-text">2. Is the shortlist better than the longlist? Are winners better than nominees? </span>
+                                        <span class="collapsible-text">2. Ist die Shortlist besser als die Longlist? Sind die Gewinner besser als die Nominierten? </span>
                                         <span class="collapsible-icon">+</span>
                                     </button>
                                     <div class="collapsible-content">
                                         <!-- Your collapsible section content goes here -->
                                         <p style="margin-bottom: 10px;
-                                        text-indent: 20px;">I’m interested in how closely the opinion of the Booker judges lines up with public opinion. If it does, we’d expect to see that the average rating given to winning novels exceeds the ratings for shortlisted novels which in turn exceed the ratings for longlisted novels. In fact, that is what we see. Novels on the longlist have an average rating of 3.60, which rises to 3.68 for shortlisted novels and 3.8 for winning novels.</p>
+                                        text-indent: 20px;">Mich interessiert, inwieweit sich die Meinung der Booker-Jury mit der öffentlichen Meinung deckt. Wenn dies der Fall ist, würde man erwarten, dass die durchschnittliche Bewertung der Siegerromane über der Bewertung der Romane auf der Shortlist liegt, die wiederum über der Bewertung der Romane auf der Longlist liegt. Und genau das ist der Fall. Die Romane auf der Longlist haben eine Durchschnittsbewertung von 3,60, die auf 3,68 für die Romane auf der Shortlist und 3,8 für die Siegerromane ansteigt.</p>
                                         <div class="table-container" style="height:300px; margin-bottom: 10px;">
                                             <table style="width:90%; margin:auto;">
                                                 <tr>
-                                                    <th>Category</th>
-                                                    <th>Average Rating</th>
+                                                    <th>Kategorie</th>
+                                                    <th>Durchschnittliche Bewertung</th>
                                                 </tr>
                                                 <tr>
-                                                    <td>All</td>
+                                                    <td>Alle</td>
                                                     <td>3.64</td>
                                                 </tr>
                                                 <tr>
@@ -270,72 +270,72 @@
                                                     <td>3.68</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Winner</td>
+                                                    <td>Gewinner</td>
                                                     <td>3.8</td>
                                                 </tr>
                                             </tr>
                                         </table></div>
                                         <p style="margin-bottom: 10px;
-                                        text-indent: 20px;">It’s important to note that the causality might be reversed here- in other words, winning novels might have better ratings because they won. People rating winning novels might feel compelled to give higher ratings than they otherwise would, even if just to prove to themselves that they enjoyed the winner of a prestigious prize. 
+                                        text-indent: 20px;">Es ist wichtig, darauf hinzuweisen, dass die Kausalität in diesem Fall umgekehrt sein könnte - mit anderen Worten: Siegerromane könnten bessere Bewertungen haben, weil sie gewonnen haben. Personen, die preisgekrönte Romane bewerten, könnten sich veranlasst sehen, höhere Bewertungen abzugeben, als sie es sonst tun würden, und sei es nur, um sich selbst zu beweisen, dass ihnen der Gewinner eines prestigeträchtigen Preises gefallen hat.
 </p>                                        
                                     
 
-                                        <button onclick="openSqlCodeWindow('#section2')" style="font-size: 16px; margin: auto;">SQL Code Here</button>                                        
+                                        <button onclick="openSqlCodeWindow('#section2')" style="font-size: 16px; margin: auto;">SQL Code Hier</button>                                        
                                     </div>
                                 </div>
                                 <div class="collapsible-section">
                                     <button class="collapsible-button">
-                                        <span class="collapsible-text">3. How many years had the winner highest rated?</span>
+                                        <span class="collapsible-text">3. Wie viele Jahre hatte der Gewinner die höchste Bewertung?</span>
                                         <span class="collapsible-icon">+</span>
                                     </button>
                                     <div class="collapsible-content">
                                         <!-- Your collapsible section content goes here -->
-                                        <p style="margin-bottom: 10px;text-indent: 20px;">In what percentage of years did the highest rated book by the public win the Booker? We can look at this a few different ways. Firstly, we can see what percentage of years that the highest rated book on the longlist- around a dozen books- ended up winning. We’d expect around 7%, just by chance, but the true answer is 13%, roughly double. That definitely indicates a connection between winning and popular acclaim. Looking at only the shortlist (6 books), however, gives less dramatic results. In that case, 22% of the most acclaimed novels won, where we’d expect 16%. This is not dramatically different. Practically, this seems to indicate that many of the worst books (in the opinion of the general public) do not make it to the shortlist, leaving only the best books to compete. 
+                                        <p style="margin-bottom: 10px;text-indent: 20px;">In wie viel Prozent der Jahre hat das Buch mit der höchsten Publikumsbewertung den Booker gewonnen? Wir können dies auf verschiedene Weise untersuchen. Erstens können wir sehen, in wie viel Prozent der Jahre das am höchsten bewertete Buch auf der Longlist - etwa ein Dutzend Bücher - am Ende den Preis gewann. Rein zufällig würden wir etwa 7 % erwarten, aber die tatsächliche Antwort ist 13 %, also etwa das Doppelte. Das deutet eindeutig auf einen Zusammenhang zwischen dem Gewinn und der Anerkennung durch die Öffentlichkeit hin. Betrachtet man jedoch nur die Shortlist (6 Bücher), so sind die Ergebnisse weniger dramatisch. In diesem Fall haben 22 % der am meisten gelobten Romane gewonnen, während wir 16 % erwartet hätten. Dies ist kein dramatischer Unterschied. In der Praxis scheint dies darauf hinzudeuten, dass viele der (nach Meinung der Öffentlichkeit) schlechtesten Bücher es nicht auf die Shortlist schaffen, so dass nur die besten Bücher in den Wettbewerb kommen. 
                                         </p>
                                         <table style="width:40%; margin:auto;margin-bottom: 10px;">
                                             <tr>
-                                                <th>Category</th>
-                                                <th>% of Years</th>
+                                                <th>Kategorie</th>
+                                                <th>% von Jahren</th>
                                             </tr>
                                             <tr>
-                                                <td>Best Book Won</td>
+                                                <td>Bestes Buch Gewonnen</td>
                                                 <td>13%</td>
                                             </tr>
                                             <tr>
-                                                <td>Best Book on Shortlist Won</td>
+                                                <td>Bestes Buch auf der Shortlist Gewonnen</td>
                                                 <td>22%</td>
                                             </tr>
                                             <tr>
-                                                <td>Most Popular Book Won</td>
+                                                <td>Populärstes Buch Gewonnen</td>
                                                 <td>26%</td>
                                             </tr>
                                             <tr>
-                                                <td>Most Popular on Shortlist</td>
+                                                <td>Beliebteste auf der Shortlist Gewonnen</td>
                                                 <td>39%</td>
                                             </tr>   
                                         </table>
-                                        <p style="margin-bottom: 10px;text-indent: 20px;">Matters are different, however, if we look at popularity. The most popular book won 26% of the time and the most popular book on the shortlist won 39% of the time. With the current data, however, it’s not possible to establish causation- many people read Booker Prize winners because they are Booker Prize winners, so that may explain the correlation.  
+                                        <p style="margin-bottom: 10px;text-indent: 20px;">Anders verhält es sich jedoch, wenn man die Popularität betrachtet. Das beliebteste Buch gewann in 26 % der Fälle, das beliebteste Buch auf der Auswahlliste gewann in 39 % der Fälle. Mit den aktuellen Daten ist es jedoch nicht möglich, einen kausalen Zusammenhang herzustellen - viele Menschen lesen Booker-Preisträger, weil sie Booker-Preisträger sind, was die Korrelation erklären könnte.  
                                         </p>                                        
-                                        <button onclick="openSqlCodeWindow('#section3')" style="font-size: 16px; margin: auto;">SQL Code Here</button>   
+                                        <button onclick="openSqlCodeWindow('#section3')" style="font-size: 16px; margin: auto;">SQL Code Hier</button>   
 
                                     </div>
                                 </div>
                                 <div class="collapsible-section">
                                     <button class="collapsible-button">
-                                        <span class="collapsible-text">4. What are the best winners and nominees?</span>
+                                        <span class="collapsible-text">4. Was sind die besten Gewinner und Nominierten?</span>
                                         <span class="collapsible-icon">+</span>
                                     </button>
                                     <div class="collapsible-content">
                                         <!-- Your collapsible section content goes here -->
-                                        <p style="margin-bottom: 10px;text-indent: 20px;">So, what are the highest rated winners and nominees? In the table below you can see all the highest rated novels with the names of winners in bold. 
+                                        <p style="margin-bottom: 10px;text-indent: 20px;">Was sind nun die am höchsten bewerteten Gewinner und Nominierten? In der nachstehenden Tabelle finden Sie alle am höchsten bewerteten Romane mit den Namen der Gewinner in Fettdruck.
                                         </p>
                                         <div class="table-container" style="height:300px; margin-bottom: 10px;">
                                             <table style="width:90%; margin:auto;">
                                                 <tr>
-                                                    <th>Title</th>
-                                                    <th>Author</th>
-                                                    <th>Average Rating</th>
-                                                    <th># of Ratings</th>
+                                                    <th>Buch</th>
+                                                    <th>Autor</th>
+                                                    <th>Durchschnittliche Bewertung</th>
+                                                    <th># von Ratings</th>
                                                 </tr>
                                                 <tr>
                                                     <td>This Thing of Darkness</td>
@@ -399,24 +399,24 @@
                                                 </tr>
                                             </table>
                                         </div>                                        
-                                        <p style="margin-bottom: 10px;text-indent: 20px;">Overall, it’s noteworthy that 4 of the 10 highest rated books were winners.The majority of them were quite popular as well, although only three were in the top tier of most popular books with over 100,000 ratings. 
+                                        <p style="margin-bottom: 10px;text-indent: 20px;">Insgesamt ist es bemerkenswert, dass 4 der 10 am höchsten bewerteten Bücher Gewinner waren, die meisten von ihnen waren auch recht beliebt, obwohl nur drei in der Spitzengruppe der beliebtesten Bücher mit über 100.000 Bewertungen waren. 
                                         </p>
 
                                         <div class="table-container" style="height:300px; margin-bottom: 10px;">
                                             <table style="width:90%; margin:auto;">
                                                 <tr>
-                                                    <th colspan="4">Best Non-Winners</th>
-                                                    <th colspan="4">Best Winners</th>
+                                                    <th colspan="4">Beste Nicht-Gewinner</th>
+                                                    <th colspan="4">Beste Gewinner</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>Title</th>
-                                                    <th>Author</th>
-                                                    <th>Average Rating</th>
-                                                    <th># of Ratings</th>
-                                                    <th>Title</th>
-                                                    <th>Author</th>
-                                                    <th>Average Rating</th>
-                                                    <th># of Ratings</th>
+                                                    <th>Buch</th>
+                                                    <th>Autor</th>
+                                                    <th>Durchschnittliche Bewertung</th>
+                                                    <th># von Ratings</th>
+                                                    <th>Buch</th>
+                                                    <th>Autor</th>
+                                                    <th>Durchschnittliche Bewertung</th>
+                                                    <th># von Ratings</th>
                                                 </tr>
                                                 <tr>
                                                     <td>This Thing of Darkness</td>
@@ -521,29 +521,29 @@
                                             </table>
                                         </div>   
 
-                                        <button onclick="openSqlCodeWindow('#section4')" style="font-size: 16px; margin: auto;">SQL Code Here</button> 
+                                        <button onclick="openSqlCodeWindow('#section4')" style="font-size: 16px; margin: auto;">SQL Code Hier</button> 
                                     </div>
                                 </div>
                                 <div class="collapsible-section">
                                     <button class="collapsible-button">
-                                        <span class="collapsible-text">5. What were the best Booker years? The worst?</span>
+                                        <span class="collapsible-text">5. Was waren die besten Booker-Jahre? Die schlechtesten?</span>
                                         <span class="collapsible-icon">+</span>
                                     </button>
                                     <div class="collapsible-content">
                                         <!-- Your collapsible section content goes here -->
-                                        <p style="margin-bottom: 10px;text-indent: 20px;">Some years of the Booker Prize must feature a better slate than others. Using the data from Goodreads, we should be able to establish which year had the best novels. However, the data offers a complication: more recent years are more highly rated than past years. The five highest rated years are the past five years; many of the lowest-rated years are among the earlier in the sample.  
+                                        <p style="margin-bottom: 10px;text-indent: 20px;">In manchen Jahren des Booker Prize gibt es sicher bessere Romane als in anderen. Anhand der Daten von Goodreads sollten wir feststellen können, welches Jahr die besten Romane hatte. Die Daten bieten jedoch eine Komplikation: Die jüngeren Jahre werden besser bewertet als die vergangenen Jahre. Die fünf am besten bewerteten Jahre sind die letzten fünf Jahre; viele der am schlechtesten bewerteten Jahre gehören zu den früheren Jahren der Stichprobe.  
                                         </p>
                                           
                                         <table style="width:60%; margin:auto;margin-bottom: 10px;">      
                                             <tr>
-                                                <th colspan="2">Best Years</th>
-                                                <th colspan="2">Worst Years</th>
+                                                <th colspan="2">Beste Jahre</th>
+                                                <th colspan="2">Schlechste Jahre</th>
                                             </tr>
                                             <tr>
-                                                <th>Year</th>
-                                                <th>Average Rating</th>
-                                                <th>Year</th>
-                                                <th>Average Rating</th>
+                                                <th>Jahr</th>
+                                                <th>Durchschnittliche Bewertung</th>
+                                                <th>Jahr</th>
+                                                <th>Durchschnittliche Bewertung</th>
                                             </tr>
                                             <tr>
                                                 <td>2019</td>
@@ -577,30 +577,30 @@
                                             </tr>
                                     </table>
                                       
-                                        <p style="margin-bottom: 10px;text-indent: 20px;">There’s two possible explanations for this that I see. The first is recency bias. I uncovered this in my analysis of the Hugo Awards, where newer books are rated quite a bit higher than older ones. The other option is that there’s been a change to the Bookers that have let to more broadly-accessible books being nominated recently. This is entirely possible. One particular change that may have caused it is the change in 2014 to allow any novels published in English to be nominated for the prize, which opened the competition to, among others, American authors. 
+                                        <p style="margin-bottom: 10px;text-indent: 20px;">Dafür gibt es meiner Meinung nach zwei mögliche Erklärungen. Die erste ist der Recency Bias. Das habe ich bei meiner Analyse der <a href = "https://vincentium123.github.io/Portfolio.github.io/hugos_de.html">Hugo Awards</a> festgestellt, wo neuere Bücher deutlich höher bewertet werden als ältere. Die andere Möglichkeit ist, dass es eine Änderung bei den Bookers gegeben hat, die dazu geführt hat, dass in letzter Zeit mehr allgemein zugängliche Bücher nominiert wurden. Das ist durchaus möglich. Eine besondere Änderung, die dazu geführt haben könnte, ist die Änderung im Jahr 2014, wonach alle in englischer Sprache veröffentlichten Romane für den Preis nominiert werden können, wodurch der Wettbewerb unter anderem für amerikanische Autoren geöffnet wurde. 
                                         </p>                                        
                                         
                                                                            
-                                        <button onclick="openSqlCodeWindow('#section5')" style="font-size: 16px; margin: auto;">SQL Code Here</button>
+                                        <button onclick="openSqlCodeWindow('#section5')" style="font-size: 16px; margin: auto;">SQL Code Hier</button>
                                     </div>
                                 </div>
                                 <div class="collapsible-section">
                                     <button class="collapsible-button">
-                                        <span class="collapsible-text">6. What were the worst Booker nominees?</span>
+                                        <span class="collapsible-text">6. Was waren die schlechtesten Booker-Kandidaten?</span>
                                         <span class="collapsible-icon">+</span>
                                     </button>
                                     <div class="collapsible-content">
                                         <!-- Your collapsible section content goes here -->
-                                        <p style="margin-bottom: 10px;text-indent: 20px;">Now, the question you’ve all been waiting for: what are the absolute worst books, in the opinions of Goodreads users, to be nominated for the Booker Prize? 
+                                        <p style="margin-bottom: 10px;text-indent: 20px;">Und nun die Frage, auf die Sie alle gewartet haben: Welches sind die absolut schlechtesten Bücher, die nach Meinung der Goodreads-Nutzer für den Booker Prize nominiert wurden? 
 
                                         </p>   
                                         <div class="table-container" style="height:300px; margin-bottom: 10px;">
                                         <table style="margin:auto; width: 50%; height: 300">
                                             <tr>
-                                                <th>Title</th>
-                                                <th>Author</th>
-                                                <th>Average Rating</th>
-                                                <th># of Ratings</th>
+                                                <th>Buch</th>
+                                                <th>Autor</th>
+                                                <th>Durchschnittliche Bewertung</th>
+                                                <th># von Ratings</th>
                                             </tr>
                                             <tr>
                                                 <td>All for Love</td>
@@ -663,15 +663,14 @@
                                                 <td>1,426</td>
                                             </tr>
                                         </table></div>
-                                        <p style="margin-bottom: 10px;text-indent: 20px;">Let’s state the obvious: a lot of people really don’t like Howard Jacobson. It seems the Booker judges disagree, however- The Finkler Question won the Booker Prize and J  was shortlisted. No other author appears more than once. However, there is a clear thread uniting all of them- their books are simply not very popular. The Finkler Question has by far the highest number of reviews. Several others have less than 100, putting them solidly in the bottom 5% of Booker nominees by rating. These seem to be the books that people are referring to when they wonder if people even read Booker nominees. 
-
+                                        <p style="margin-bottom: 10px;text-indent: 20px;">Halten wir das Offensichtliche fest: Viele Leute mögen Howard Jacobson nicht wirklich. Die Booker-Jury scheint jedoch anderer Meinung zu sein - The Finkler Question hat den Booker Prize gewonnen und J war auf der Shortlist. Kein anderer Autor taucht mehr als einmal auf. Es gibt jedoch einen klaren roten Faden, der sie alle eint - ihre Bücher sind einfach nicht sehr beliebt. The Finkler Question hat bei weitem die meisten Bewertungen. Mehrere andere haben weniger als 100 Bewertungen, womit sie zu den untersten 5 % der für den Booker nominierten Bücher gehören. Das scheinen die Bücher zu sein, auf die sich die Leute beziehen, wenn sie sich fragen, ob die Leute die Booker-Nominierten überhaupt lesen.
                                         </p> 
  
-                                        <button onclick="openSqlCodeWindow('#section6')" style="font-size: 16px; margin: auto;">SQL Code Here</button> 
+                                        <button onclick="openSqlCodeWindow('#section6')" style="font-size: 16px; margin: auto;">SQL Code Hier</button> 
                                     </div>
                                 </div>
 
-                                <p>Below I used the Goodreads data to find a few book recommendations.</p>
+                                <p>Im Folgenden habe ich anhand der Goodreads-Daten ein paar Buchempfehlungen gefunden.</p>
                                 <div class="collapsible-section">
                                     <button class="collapsible-button">
                                         <span class="collapsible-text">Hidden Gems</span>
@@ -679,14 +678,14 @@
                                     </button>
                                     <div class="collapsible-content">
                                         <!-- Your collapsible section content goes here -->
-                                        <p style="margin-bottom: 10px;text-indent: 20px;">I decided to look for Hidden Gems- books that have received relatively few ratings, but have overall good reviews. I defined these conditions as having reviews in the top 25% of books in the sample, but a number of reviews in the bottom 25%. There weren't many books that fit these criteria- only four. On the whole,they seem quite obscure, especially <i>Crossing the Lines by Melvyn Bragg</i>, with only 153 reviews. If you're looking for a book you've never even heard of before (and your friends have never heard of, either) any of these might be an excellent choice.</p>                      
+                                        <p style="margin-bottom: 10px;text-indent: 20px;">Ich entschied mich, nach "Hidden Gems" zu suchen - Bücher, die relativ wenige Bewertungen erhalten haben, aber insgesamt gute Bewertungen aufweisen. Ich definierte diese Bedingungen so, dass die Bewertungen in den oberen 25 % der Bücher in der Stichprobe liegen, aber die Anzahl der Bewertungen in den unteren 25 %. Es gab nicht viele Bücher, die diese Kriterien erfüllten - nur vier. Im Großen und Ganzen scheinen sie ziemlich obskur zu sein, insbesondere Crossing the Lines von Melvyn Bragg mit nur 153 Bewertungen. Wenn Sie auf der Suche nach einem Buch sind, von dem Sie noch nie gehört haben (und Ihre Freunde auch nicht), könnte eines dieser Bücher eine ausgezeichnete Wahl sein.</p>                      
                                         <table style="width:90%; margin:auto;margin-bottom: 10px;">
                                             <tr>
-                                                <th>Title</th>
-                                                <th>Author</th>
-                                                <th>Year</th>
-                                                <th># of Ratings</th>
-                                                <th>Average Rating</th>
+                                                <th>Buch</th>
+                                                <th>Autor</th>
+                                                <th>Jahr</th>
+                                                <th># von Ratings</th>
+                                                <th>Durchschittliche Bewertung</th>
                                               </tr>
                                             </thead>
                                             <tbody>
@@ -695,32 +694,32 @@
                                                 <td>Melvyn Bragg</td>
                                                 <td>2003</td>
                                                 <td>153</td>
-                                                <td>3.921568627</td>
+                                                <td>3.92</td>
                                               </tr>
                                               <tr>
                                                 <td>So Many Ways to Begin</td>
                                                 <td>Jon McGregor</td>
                                                 <td>2006</td>
                                                 <td>1873</td>
-                                                <td>3.868126001</td>
+                                                <td>3.87</td>
                                               </tr>
                                               <tr>
                                                 <td>From A to X: A Story in Letters</td>
                                                 <td>John Berger</td>
                                                 <td>2008</td>
                                                 <td>1510</td>
-                                                <td>3.87218543</td>
+                                                <td>3.87</td>
                                               </tr>
                                               <tr>
                                                 <td>All The Little Bird-Hearts</td>
                                                 <td>Viktoria Lloyd-Barlow</td>
                                                 <td>2023</td>
                                                 <td>1223</td>
-                                                <td>3.910057236</td>
+                                                <td>3.91</td>
                                               </tr>
                                             </tbody>
                                         </table>                                                              
-                                        <button onclick="openSqlCodeWindow('#rec1')" style="font-size: 16px; margin: auto;">SQL Code Here</button> 
+                                        <button onclick="openSqlCodeWindow('#rec1')" style="font-size: 16px; margin: auto;">SQL Code Hier</button> 
                                     </div>
                                 </div>
                             </ul>
