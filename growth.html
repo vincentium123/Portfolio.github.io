@@ -1,0 +1,171 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Jonathan Vincent Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper" class="fade-in">
+				
+
+				<!-- Intro -->
+					<div id="intro">
+						<h1>Jonathan Vincent<br />
+						Data Analyst Portfolio</h1>
+						<p>Data Analyst | R, Python, SQL, Excel, Tableau<br />
+						</p>
+					</div>
+
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="index.html">Projects</a></li>
+							<li><a href="aboutme.html">About Me</a></li>
+							<li><a href="index auf deutsch.html">Portfolio auf Deutsch</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="https://www.linkedin.com/in/jonathan-vincent-520259165/" class="icon brands fa-linkedin"><span class="label">Linkedin</span></a></li>
+							<li><a href="https://github.com/vincentium123" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<article class="post featured">
+                            <header class="major">
+                                <h2><a href="https://iulyge-jonathan-vincent.shinyapps.io/growth_visualization/">Comparing Economic Growth</a></h2>
+                                <p>Countries worldwide have vastly different rates of economic growth, as well as different amounts of variance. Developed economies tend to growth steadily at a rate of 1-4%, without wild swings in either direction. Economies that depend heavily on single commodities like oil or cacao, meanwhile, can swing rapidly between booms and busts- growing 10% in one year then falling 8% in the next. Each country has a different story. This visualization allows you to compare countries across decades (in the scatterplot view) or continents within a decade (in the density plot view). Enjoy!</p>
+                                <iframe height = "600px" width="100%" frameborder="no" src="https://iulyge-jonathan-vincent.shinyapps.io/growth_visualization/"> </iframe>
+                        </article>
+
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<section>
+							<form method="post" action="#">
+								<div class="fields">
+									<div class="field">
+										<label for="name">Name</label>
+										<input type="text" name="name" id="name" />
+									</div>
+									<div class="field">
+										<label for="email">Email</label>
+										<input type="text" name="email" id="email" />
+									</div>
+									<div class="field">
+										<label for="message">Message</label>
+										<textarea name="message" id="message" rows="3"></textarea>
+									</div>
+								</div>
+								<ul class="actions">
+									<li><input type="submit" value="Send Message" /></li>
+								</ul>
+							</form>
+						</section>
+						<section class="split contact">
+							<section>
+								<h3>Email</h3>
+								<p><a href="#">jonvin35@gmail.com</a></p>
+							</section>
+						</section>
+					</footer>
+
+				<!-- Copyright -->
+					<div id="copyright">
+						<ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+            <style>
+                .collapsible-section {
+                    text-align: left;
+                }
+            
+                .collapsible-button {
+                    background-color: #555; /* Lighter gray */
+                    color: #fff; /* White text */
+                    padding: 10px;
+                    border: none;
+                    cursor: pointer;
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    text-align: left;
+                    transition: background-color 0.3s, color 0.3s; /* Add animation for background color and text color */
+                }
+            
+                .collapsible-text {
+                    flex: 1;
+                    color: #fff;
+                    margin-right: 10px; /* Add some space between text and icon */
+                }
+            
+                .collapsible-icon {
+                    font-size: 18px; /* Adjust the size as needed */
+                    color: #fff;
+                }
+            
+                .collapsible-content {
+                    max-height: 0;
+                    overflow: hidden;
+                    transition: max-height 0.3s ease-in-out; /* Add animation for max-height */
+                    padding: 10px;
+                    background-color: #ddd; /* Light gray */
+                }
+            
+                .collapsible-content p {
+                    margin: 0;
+                }
+            
+                .collapsible-section.active .collapsible-content {
+                    max-height: 200px; /* Adjust the max-height as needed */
+                }
+            </style>
+            
+            <!-- JavaScript for collapsible functionality -->
+            <script>
+                var coll = document.getElementsByClassName("collapsible-button");
+                var i;
+            
+                for (i = 0; i < coll.length; i++) {
+                    coll[i].addEventListener("click", function () {
+                        this.classList.toggle("active");
+                        var content = this.nextElementSibling;
+                        var icon = this.querySelector('.collapsible-icon');
+            
+                        if (content.style.maxHeight) {
+                            content.style.maxHeight = null;
+                            icon.innerHTML = "+";
+                        } else {
+                            content.style.maxHeight = content.scrollHeight + "px";
+                            icon.innerHTML = "-";
+                        }
+                    });
+                }
+            </script>
+
+	</body>
+</html>
+
